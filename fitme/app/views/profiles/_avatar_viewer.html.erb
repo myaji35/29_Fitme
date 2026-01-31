@@ -1,0 +1,49 @@
+<%# 3D Avatar Viewer Component %>
+<div class="avatar-viewer">
+  <% if @profile.measurements.present? %>
+    <div class="measurements-display">
+      <h3>신체 치수</h3>
+      <dl>
+        <dt>가슴둘레:</dt>
+        <dd><%= @profile.measurements["chest"] %> cm</dd>
+
+        <dt>허리둘레:</dt>
+        <dd><%= @profile.measurements["waist"] %> cm</dd>
+
+        <dt>엉덩이둘레:</dt>
+        <dd><%= @profile.measurements["hips"] %> cm</dd>
+
+        <dt>다리 안쪽 길이:</dt>
+        <dd><%= @profile.measurements["inseam"] %> cm</dd>
+
+        <dt>어깨너비:</dt>
+        <dd><%= @profile.measurements["shoulder"] %> cm</dd>
+
+        <dt>팔길이:</dt>
+        <dd><%= @profile.measurements["arm_length"] %> cm</dd>
+
+        <dt>BMI:</dt>
+        <dd><%= @profile.measurements["bmi"] %></dd>
+      </dl>
+    </div>
+
+    <%# Placeholder for 3D model viewer %>
+    <div class="avatar-3d-placeholder">
+      <p>3D 아바타 뷰어 (Phase 2 개발 중)</p>
+      <p>측정된 신체 데이터를 기반으로 3D 모델이 생성됩니다.</p>
+
+      <%# TODO: Integrate model-viewer or Three.js %>
+      <%# <model-viewer
+        src="/path/to/avatar.glb"
+        alt="Your 3D Avatar"
+        auto-rotate
+        camera-controls>
+      </model-viewer> %>
+    </div>
+  <% else %>
+    <div class="no-measurements">
+      <p>아직 신체 치수가 측정되지 않았습니다.</p>
+      <p>프로필에서 전신 사진을 업로드하면 AI가 자동으로 측정합니다.</p>
+    </div>
+  <% end %>
+</div>

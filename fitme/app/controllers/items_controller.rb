@@ -11,6 +11,17 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def try_on
+    @item = current_user.items.find(params[:id])
+
+    if current_user.profile&.avatar_3d_file&.attached?
+      VirtualFittingJob.perform_later(current_user.id, @item.id)
+      redirect_to @item, notice: "가상 피팅을 생성 중입니다..."
+    else
+      redirect_to profile_path, alert: "먼저 프로필에서 전신 사진을 업로드해주세요!"
+    end
+  end
+
   def new
     @item = current_user.items.build
   end

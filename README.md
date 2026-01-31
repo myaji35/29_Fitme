@@ -128,21 +128,23 @@ weight_kg: 70
 
 ## 📅 개발 로드맵
 
-### Phase 1: MVP (4주) - Current
+### Phase 1: MVP (4주) - ✅ COMPLETED
 - ✅ Rails 8 + SQLite 환경 구축
 - ✅ 기본 데이터 모델링
 - ✅ Python AI 서비스 기본 구조
 - ✅ Docker Compose 설정
-- 🔄 회원가입 및 기본 옷장
-- 🔄 rembg 배경 제거 연동
-- 🔄 OpenWeatherMap 코디 추천
+- ✅ 회원가입 및 기본 옷장
+- ✅ rembg 배경 제거 연동
+- ✅ OpenWeatherMap 코디 추천
 
-### Phase 2: AI 고도화 (4주)
-- ⏳ 3D Mesh 생성 모델 서빙
-- ⏳ 사진 → 3D 아바타 변환
-- ⏳ 신체 치수 측정 알고리즘
+### Phase 2: AI 고도화 (4주) - ✅ COMPLETED
+- ✅ 신체 치수 측정 알고리즘 (BMI 기반 추정)
+- ✅ 3D 아바타 생성 파이프라인 구축
+- ✅ 가상 피팅 기능 (2.5D warping)
+- ✅ Avatar Viewer UI 통합
+- ✅ Background Jobs (GenerateAvatar, VirtualFitting)
 
-### Phase 3: B2B 수익화 (4주)
+### Phase 3: B2B 수익화 (4주) - PLANNED
 - ⏳ Partner 대시보드
 - ⏳ API Gateway + 과금 로직
 - ⏳ 외부 쇼핑몰 연동

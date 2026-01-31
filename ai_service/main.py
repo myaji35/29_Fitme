@@ -7,6 +7,9 @@ import logging
 
 from app.services.background_removal import remove_background
 from app.services.image_classification import classify_clothing
+from app.services.body_measurement import extract_measurements
+from app.services.avatar_3d_generator import generate_3d_avatar
+from app.services.virtual_fitting import apply_virtual_fitting
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -117,7 +120,7 @@ async def classify_cloth(
 
 
 @app.post("/api/v1/generate-avatar")
-async def generate_avatar(
+async def generate_avatar_endpoint(
     file: UploadFile = File(..., description="Full-body photo"),
     height_cm: float = Form(..., description="Height in centimeters"),
     weight_kg: float = Form(..., description="Weight in kilograms")
@@ -136,19 +139,21 @@ async def generate_avatar(
     try:
         logger.info(f"Generating 3D avatar for user: height={height_cm}cm, weight={weight_kg}kg")
 
-        # TODO: Implement 3D avatar generation
-        # This is a placeholder for Phase 2 implementation
+        # Read uploaded file
+        image_bytes = await file.read()
+
+        # Step 1: Extract body measurements
+        measurements = await extract_measurements(image_bytes, height_cm, weight_kg)
+
+        # Step 2: Generate 3D avatar
+        avatar_data = await generate_3d_avatar(image_bytes, height_cm, weight_kg, measurements)
 
         return JSONResponse(
             content={
-                "message": "3D avatar generation is not yet implemented (Phase 2)",
-                "status": "placeholder",
-                "measurements": {
-                    "chest": 0,
-                    "waist": 0,
-                    "hips": 0,
-                    "inseam": 0
-                }
+                "status": "success",
+                "measurements": measurements,
+                "avatar_data": avatar_data,
+                "message": "Avatar generated successfully (Phase 2 MVP)"
             }
         )
 
@@ -157,6 +162,54 @@ async def generate_avatar(
         return JSONResponse(
             status_code=500,
             content={"error": f"Failed to generate avatar: {str(e)}"}
+        )
+
+
+@app.post("/api/v1/virtual-fitting")
+async def virtual_fitting_endpoint(
+    avatar_image: UploadFile = File(..., description="Avatar image"),
+    clothing_image: UploadFile = File(..., description="Clothing item image"),
+    measurements: str = Form(..., description="Body measurements as JSON string")
+):
+    """
+    Apply virtual fitting - overlay clothing on avatar
+
+    Args:
+        avatar_image: Avatar/user photo
+        clothing_image: Clothing item (background removed)
+        measurements: JSON string of body measurements
+
+    Returns:
+        Composited image showing virtual try-on
+    """
+    try:
+        logger.info("Processing virtual fitting request")
+
+        # Read images
+        avatar_bytes = await avatar_image.read()
+        clothing_bytes = await clothing_image.read()
+
+        # Parse measurements
+        import json
+        measurements_dict = json.loads(measurements)
+
+        # Apply virtual fitting
+        result_bytes = await apply_virtual_fitting(avatar_bytes, clothing_bytes, measurements_dict)
+
+        from fastapi.responses import Response
+        return Response(
+            content=result_bytes,
+            media_type="image/png",
+            headers={
+                "Content-Disposition": f"attachment; filename=virtual_fitting_result.png"
+            }
+        )
+
+    except Exception as e:
+        logger.error(f"Virtual fitting error: {str(e)}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Virtual fitting failed: {str(e)}"}
         )
 
 

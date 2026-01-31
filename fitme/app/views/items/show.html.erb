@@ -28,6 +28,7 @@
       <% end %>
 
       <div class="actions">
+        <%= button_to "가상 피팅", try_on_item_path(@item), method: :post, class: "btn btn-success" %>
         <%= link_to "수정", edit_item_path(@item), class: "btn btn-primary" %>
         <%= button_to "삭제", item_path(@item), method: :delete, data: { confirm: "정말 삭제하시겠습니까?" }, class: "btn btn-danger" %>
         <%= link_to "목록으로", items_path, class: "btn btn-secondary" %>

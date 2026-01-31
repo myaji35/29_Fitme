@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   end
 
   # Resources
-  resources :items
+  resources :items do
+    member do
+      post :try_on
+    end
+  end
   resources :outfit_suggestions, only: [:index, :show] do
     collection do
       post :generate

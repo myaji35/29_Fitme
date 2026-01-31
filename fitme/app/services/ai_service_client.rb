@@ -47,4 +47,22 @@ class AiServiceClient
       raise "AI Service Error: #{response.code} - #{response.message}"
     end
   end
+
+  def self.virtual_fitting(avatar_image, clothing_image, measurements)
+    response = post(
+      "/api/v1/virtual-fitting",
+      body: {
+        avatar_image: avatar_image,
+        clothing_image: clothing_image,
+        measurements: measurements.to_json
+      },
+      timeout: 30
+    )
+
+    if response.success?
+      response.body
+    else
+      raise "AI Service Error: #{response.code} - #{response.message}"
+    end
+  end
 end
