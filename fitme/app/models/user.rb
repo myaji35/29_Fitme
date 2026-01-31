@@ -9,8 +9,8 @@ class User < ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :outfit_suggestions, dependent: :destroy
 
-  # Enums
-  enum role: { user: 0, admin: 1, brand_partner: 2 }
+  # Enums (Rails 8.1 syntax)
+  enum :role, { user: 0, admin: 1, brand_partner: 2 }
 
   # Callbacks
   after_create :create_default_profile

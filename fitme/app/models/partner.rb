@@ -1,8 +1,8 @@
 class Partner < ApplicationRecord
   has_many :api_usage_logs, dependent: :destroy
 
-  # Enums
-  enum subscription_status: {
+  # Enums (Rails 8.1 syntax)
+  enum :subscription_status, {
     trial: "trial",
     active: "active",
     suspended: "suspended",
@@ -17,8 +17,8 @@ class Partner < ApplicationRecord
   validates :monthly_fee, numericality: { greater_than_or_equal_to: 0 }
 
   # Callbacks
-  before_create :generate_api_key
-  before_create :set_trial_period
+  before_validation :generate_api_key, on: :create
+  before_validation :set_trial_period, on: :create
 
   # Scopes
   scope :active_subscriptions, -> { where(subscription_status: [:trial, :active]) }
