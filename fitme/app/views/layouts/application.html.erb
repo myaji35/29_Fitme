@@ -24,6 +24,30 @@
   </head>
 
   <body>
-    <%= yield %>
+    <% if user_signed_in? %>
+      <nav class="navbar">
+        <div class="container">
+          <%= link_to "FitMe", dashboard_path, class: "logo" %>
+          <ul class="nav-links">
+            <li><%= link_to "대시보드", dashboard_path %></li>
+            <li><%= link_to "내 옷장", items_path %></li>
+            <li><%= link_to "코디 추천", outfit_suggestions_path %></li>
+            <li><%= link_to "프로필", profile_path %></li>
+            <li><%= button_to "로그아웃", destroy_user_session_path, method: :delete, class: "btn-logout" %></li>
+          </ul>
+        </div>
+      </nav>
+    <% end %>
+
+    <div class="container">
+      <% if notice %>
+        <div class="alert alert-success"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-danger"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>

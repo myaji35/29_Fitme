@@ -1,10 +1,270 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * FitMe Application Styles
  */
+
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #4CAF50;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-secondary {
+  background-color: #ddd;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #ccc;
+}
+
+.btn-danger {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Alerts */
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cta-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.feature {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Items Grid */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.item-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+}
+
+.item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.placeholder {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.item-info {
+  padding: 1rem;
+}
+
+.item-actions {
+  padding: 0 1rem 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Forms */
+.form-page {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="file"],
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.errors {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.errors ul {
+  margin-left: 1.5rem;
+}
+
+/* Dashboard */
+.weather-widget {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 10px;
+}

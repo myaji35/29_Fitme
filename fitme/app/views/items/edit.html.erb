@@ -1,0 +1,47 @@
+<div class="form-page">
+  <h1>아이템 수정</h1>
+
+  <%= form_with model: @item, local: true do |f| %>
+    <% if @item.errors.any? %>
+      <div class="errors">
+        <h3><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+        <ul>
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if @item.image.attached? %>
+      <div class="current-image">
+        <%= image_tag @item.image, style: "max-width: 300px;" %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :image, "새 사진 업로드 (선택사항)" %>
+      <%= f.file_field :image, accept: "image/*" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :category, "카테고리" %>
+      <%= f.select :category, options_for_select([["상의", "top"], ["하의", "bottom"], ["아우터", "outer"], ["신발", "shoes"]], @item.category), { prompt: "선택하세요" }, required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :color, "색상" %>
+      <%= f.text_field :color, placeholder: "예: 파란색, 검정색" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :season, "계절" %>
+      <%= f.select :season, options_for_select([["봄", "spring"], ["여름", "summer"], ["가을", "fall"], ["겨울", "winter"]], @item.season), { prompt: "선택하세요" } %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "업데이트", class: "btn btn-primary" %>
+      <%= link_to "취소", @item, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

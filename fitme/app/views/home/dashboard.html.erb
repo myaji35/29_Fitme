@@ -1,0 +1,49 @@
+<div class="dashboard">
+  <h1>대시보드</h1>
+
+  <div class="weather-widget">
+    <h2>오늘의 날씨</h2>
+    <p>
+      🌡️ <%= @weather[:temp] %>°C (체감 <%= @weather[:feels_like] %>°C)<br>
+      <%= @weather[:description] %>
+    </p>
+    <%= link_to "오늘의 코디 추천 받기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+  </div>
+
+  <div class="recent-items">
+    <h2>최근 추가한 아이템</h2>
+    <% if @items.any? %>
+      <div class="items-grid">
+        <% @items.each do |item| %>
+          <div class="item-card">
+            <% if item.image.attached? %>
+              <%= image_tag item.image, alt: item.category %>
+            <% else %>
+              <div class="placeholder">No Image</div>
+            <% end %>
+            <p><%= item.category %> - <%= item.color %></p>
+          </div>
+        <% end %>
+      </div>
+      <%= link_to "전체 옷장 보기", items_path, class: "btn btn-secondary" %>
+    <% else %>
+      <p>아직 추가한 아이템이 없습니다.</p>
+      <%= link_to "아이템 추가하기", new_item_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <div class="recent-suggestions">
+    <h2>최근 코디 추천</h2>
+    <% if @recent_suggestions.any? %>
+      <ul>
+        <% @recent_suggestions.each do |suggestion| %>
+          <li>
+            <%= link_to "#{suggestion.suggested_for_date} 코디", outfit_suggestion_path(suggestion) %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>아직 코디 추천이 없습니다.</p>
+    <% end %>
+  </div>
+</div>

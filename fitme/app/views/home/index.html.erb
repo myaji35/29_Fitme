@@ -1,0 +1,28 @@
+<div class="hero">
+  <h1>FitMe - AI 패션 플랫폼</h1>
+  <p>전신 사진 한 장으로 나만의 3D 아바타를 생성하고, 가상 피팅과 코디 추천을 경험하세요!</p>
+
+  <% unless user_signed_in? %>
+    <div class="cta-buttons">
+      <%= link_to "시작하기", new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to "로그인", new_user_session_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="features">
+  <div class="feature">
+    <h3>📸 3D 아바타 생성</h3>
+    <p>전신 사진 1장 + 키/몸무게로 360도 3D 모델 생성</p>
+  </div>
+
+  <div class="feature">
+    <h3>👔 스마트 옷장</h3>
+    <p>AI 배경 제거 + 자동 태깅 (종류, 색상, 소재, 계절)</p>
+  </div>
+
+  <div class="feature">
+    <h3>🌤️ AI 코디 추천</h3>
+    <p>날씨 기반 매일 3건 코디 제안</p>
+  </div>
+</div>

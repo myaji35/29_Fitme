@@ -1,0 +1,23 @@
+<div class="suggestions-page">
+  <h1>코디 추천</h1>
+
+  <%= link_to "새 코디 생성", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+
+  <% if @suggestions.any? %>
+    <div class="suggestions-list">
+      <% @suggestions.each do |suggestion| %>
+        <div class="suggestion-card">
+          <h3><%= suggestion.suggested_for_date %></h3>
+          <p>날씨: <%= suggestion.weather_snapshot["temp"] %>°C - <%= suggestion.weather_snapshot["description"] %></p>
+          <p>아이템 수: <%= suggestion.item_ids.count %>개</p>
+          <%= link_to "상세 보기", outfit_suggestion_path(suggestion), class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <p>아직 코디 추천이 없습니다.</p>
+      <%= link_to "첫 코디 생성하기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

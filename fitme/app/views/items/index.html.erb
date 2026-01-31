@@ -1,0 +1,43 @@
+<div class="items-page">
+  <div class="header">
+    <h1>내 옷장</h1>
+    <%= link_to "새 아이템 추가", new_item_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="filters">
+    <%= form_with url: items_path, method: :get, local: true do |f| %>
+      <%= f.select :category, options_for_select([["전체", ""], ["상의", "top"], ["하의", "bottom"], ["아우터", "outer"], ["신발", "shoes"]], params[:category]), {}, class: "filter-select" %>
+      <%= f.select :season, options_for_select([["전체 계절", ""], ["봄", "spring"], ["여름", "summer"], ["가을", "fall"], ["겨울", "winter"]], params[:season]), {}, class: "filter-select" %>
+      <%= f.submit "필터 적용", class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+
+  <% if @items.any? %>
+    <div class="items-grid">
+      <% @items.each do |item| %>
+        <div class="item-card">
+          <%= link_to item_path(item) do %>
+            <% if item.image.attached? %>
+              <%= image_tag item.image, alt: item.category, class: "item-image" %>
+            <% else %>
+              <div class="placeholder">No Image</div>
+            <% end %>
+            <div class="item-info">
+              <h3><%= item.category&.capitalize %></h3>
+              <p><%= item.color %> | <%= item.season&.capitalize %></p>
+            </div>
+          <% end %>
+          <div class="item-actions">
+            <%= link_to "수정", edit_item_path(item), class: "btn-small" %>
+            <%= button_to "삭제", item_path(item), method: :delete, data: { confirm: "정말 삭제하시겠습니까?" }, class: "btn-small btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="empty-state">
+      <p>아직 추가한 아이템이 없습니다.</p>
+      <%= link_to "첫 아이템 추가하기", new_item_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

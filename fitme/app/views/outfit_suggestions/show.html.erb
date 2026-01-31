@@ -1,0 +1,29 @@
+<div class="suggestion-detail">
+  <h1><%= @suggestion.suggested_for_date %> 코디</h1>
+
+  <div class="weather-info">
+    <h2>날씨 정보</h2>
+    <p>온도: <%= @suggestion.weather_snapshot["temp"] %>°C</p>
+    <p>체감: <%= @suggestion.weather_snapshot["feels_like"] %>°C</p>
+    <p>날씨: <%= @suggestion.weather_snapshot["description"] %></p>
+  </div>
+
+  <div class="outfit-items">
+    <h2>추천 아이템</h2>
+    <div class="items-grid">
+      <% @suggestion.item_ids.each do |item_id| %>
+        <% item = Item.find_by(id: item_id) %>
+        <% if item %>
+          <div class="item-card">
+            <% if item.image.attached? %>
+              <%= image_tag item.image, alt: item.category %>
+            <% end %>
+            <p><%= item.category %> - <%= item.color %></p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to "코디 목록", outfit_suggestions_path, class: "btn btn-secondary" %>
+</div>

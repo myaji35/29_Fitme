@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
 
   # Associations
   has_one :profile, dependent: :destroy
@@ -9,6 +12,12 @@ class User < ApplicationRecord
   # Enums
   enum role: { user: 0, admin: 1, brand_partner: 2 }
 
-  # Validations
-  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  # Callbacks
+  after_create :create_default_profile
+
+  private
+
+  def create_default_profile
+    create_profile unless profile.present?
+  end
 end

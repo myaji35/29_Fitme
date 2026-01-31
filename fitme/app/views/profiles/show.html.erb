@@ -1,0 +1,21 @@
+<div class="profile-page">
+  <h1>내 프로필</h1>
+
+  <dl>
+    <dt>이메일:</dt>
+    <dd><%= current_user.email %></dd>
+
+    <dt>키:</dt>
+    <dd><%= @profile.height_cm ? "#{@profile.height_cm} cm" : "미입력" %></dd>
+
+    <dt>몸무게:</dt>
+    <dd><%= @profile.weight_kg ? "#{@profile.weight_kg} kg" : "미입력" %></dd>
+
+    <% if @profile.measurements.present? %>
+      <dt>신체 치수:</dt>
+      <dd><pre><%= JSON.pretty_generate(@profile.measurements) %></pre></dd>
+    <% end %>
+  </dl>
+
+  <%= link_to "프로필 수정", edit_profile_path, class: "btn btn-primary" %>
+</div>
