@@ -1,15 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Test fixtures for Item model
+user_shirt:
+  user: regular_user
+  category: "shirt"
+  color: "blue"
+  season: "spring"
+  meta_data: '{"brand": "TestBrand", "size": "M"}'
 
-one:
-  user: one
-  category: MyString
-  color: MyString
-  season: MyString
-  meta_data: 
-
-two:
-  user: two
-  category: MyString
-  color: MyString
-  season: MyString
-  meta_data: 
+admin_pants:
+  user: admin
+  category: "pants"
+  color: "black"
+  season: "all"
+  meta_data: '{"brand": "AdminBrand", "size": "L"}'

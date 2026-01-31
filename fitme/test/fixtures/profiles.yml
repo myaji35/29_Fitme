@@ -1,17 +1,24 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  user: one
-  height_cm: 1.5
-  weight_kg: 1.5
-  measurements: 
-  avatar_3d_file_path: MyString
+# Test fixtures for Profile model
+admin_profile:
+  user: admin
+  height_cm: 175.0
+  weight_kg: 70.0
+  secure_id: "test_secure_id_admin_1234567890abcdef"
   is_public_api: false
+  measurements: '{"chest": 95, "waist": 80, "hips": 98}'
 
-two:
-  user: two
-  height_cm: 1.5
-  weight_kg: 1.5
-  measurements: 
-  avatar_3d_file_path: MyString
+user_profile:
+  user: regular_user
+  height_cm: 168.0
+  weight_kg: 60.0
+  secure_id: "test_secure_id_user_1234567890abcdef"
+  is_public_api: true
+  measurements: '{"chest": 88, "waist": 70, "hips": 92}'
+
+partner_profile:
+  user: brand_partner_user
+  height_cm: 180.0
+  weight_kg: 75.0
+  secure_id: "test_secure_id_partner_1234567890abcdef"
   is_public_api: false
+  measurements: '{"chest": 100, "waist": 85, "hips": 100}'

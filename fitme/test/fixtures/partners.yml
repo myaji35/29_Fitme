@@ -1,11 +1,33 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Test fixtures for Partner model
+active_partner:
+  name: "김철수"
+  company_name: "패션테크 주식회사"
+  contact_email: "kim@fashiontech.com"
+  api_key: "fitme_test_active_partner_key_12345678901234567890123456789012"
+  subscription_status: "active"
+  subscription_started_at: <%= 1.month.ago %>
+  subscription_ends_at: <%= 1.month.from_now %>
+  monthly_fee: 50.0
+  api_calls_count: 100
 
-one:
-  name: MyString
-  api_key: MyString
-  webhook_url: MyString
+trial_partner:
+  name: "이영희"
+  company_name: "스타일코퍼레이션"
+  contact_email: "lee@stylecorp.com"
+  api_key: "fitme_test_trial_partner_key_12345678901234567890123456789012"
+  subscription_status: "trial"
+  subscription_started_at: <%= 7.days.ago %>
+  subscription_ends_at: <%= 7.days.from_now %>
+  monthly_fee: 50.0
+  api_calls_count: 10
 
-two:
-  name: MyString
-  api_key: MyString
-  webhook_url: MyString
+suspended_partner:
+  name: "박민수"
+  company_name: "멀티샵"
+  contact_email: "park@multishop.com"
+  api_key: "fitme_test_suspended_partner_key_12345678901234567890123456789012"
+  subscription_status: "suspended"
+  subscription_started_at: <%= 2.months.ago %>
+  subscription_ends_at: <%= 1.day.ago %>
+  monthly_fee: 50.0
+  api_calls_count: 500

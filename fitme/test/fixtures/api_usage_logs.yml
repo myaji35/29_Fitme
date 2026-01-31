@@ -1,13 +1,24 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Test fixtures for ApiUsageLog model
+active_partner_log1:
+  partner: active_partner
+  profile: user_profile
+  request_type: "virtual_try_on"
+  cost: 0
 
-one:
-  partner: one
-  profile: one
-  request_type: MyString
-  cost: 1
+active_partner_log2:
+  partner: active_partner
+  profile: user_profile
+  request_type: "virtual_try_on"
+  cost: 0
 
-two:
-  partner: two
-  profile: two
-  request_type: MyString
-  cost: 1
+trial_partner_log:
+  partner: trial_partner
+  profile: user_profile
+  request_type: "virtual_try_on"
+  cost: 0
+
+suspended_partner_log:
+  partner: suspended_partner
+  profile: user_profile
+  request_type: "virtual_try_on"
+  cost: 0

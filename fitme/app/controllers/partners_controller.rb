@@ -1,6 +1,6 @@
 class PartnersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_partner, only: [:show, :edit, :update, :dashboard]
+  before_action :authenticate_user!, except: [:new, :create]
+  before_action :set_partner, only: [:show, :edit, :update, :dashboard, :renew_subscription, :suspend_subscription]
   before_action :authorize_partner, only: [:show, :edit, :update, :dashboard]
 
   def index

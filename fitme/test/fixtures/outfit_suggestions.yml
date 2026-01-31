@@ -1,15 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  user: one
-  suggested_for_date: 2026-02-01
-  weather_snapshot: 
-  item_ids: 
+# Test fixtures for OutfitSuggestion model
+user_suggestion:
+  user: regular_user
+  suggested_for_date: <%= Date.today %>
+  weather_snapshot: '{"temp": 20, "description": "맑음"}'
+  item_ids: '[1, 2]'
   selected: false
 
-two:
-  user: two
-  suggested_for_date: 2026-02-01
-  weather_snapshot: 
-  item_ids: 
-  selected: false
+admin_suggestion:
+  user: admin
+  suggested_for_date: <%= Date.today + 1 %>
+  weather_snapshot: '{"temp": 15, "description": "흐림"}'
+  item_ids: '[2, 3]'
+  selected: true

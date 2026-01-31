@@ -1,11 +1,15 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Test fixtures for User model
+admin:
+  email: admin@fitme.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: 1  # admin
 
-one:
-  email: MyString
-  password_digest: MyString
-  role: 1
+regular_user:
+  email: user@fitme.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: 0  # user
 
-two:
-  email: MyString
-  password_digest: MyString
-  role: 1
+brand_partner_user:
+  email: partner@fitme.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: 2  # brand_partner
