@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_31_214432) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_31_220015) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -73,12 +73,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_31_214432) do
   end
 
   create_table "partners", force: :cascade do |t|
+    t.integer "api_calls_count", default: 0
     t.string "api_key"
+    t.string "company_name"
+    t.string "contact_email"
     t.datetime "created_at", null: false
+    t.datetime "last_billed_at"
+    t.decimal "monthly_fee", precision: 10, scale: 2, default: "50.0"
     t.string "name"
+    t.datetime "subscription_ends_at"
+    t.datetime "subscription_started_at"
+    t.string "subscription_status", default: "trial", null: false
     t.datetime "updated_at", null: false
     t.string "webhook_url"
+    t.string "website_url"
     t.index ["api_key"], name: "index_partners_on_api_key", unique: true
+    t.index ["subscription_status"], name: "index_partners_on_subscription_status"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -87,9 +97,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_31_214432) do
     t.float "height_cm"
     t.boolean "is_public_api", default: true
     t.json "measurements"
+    t.string "secure_id"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.float "weight_kg"
+    t.index ["secure_id"], name: "index_profiles_on_secure_id", unique: true
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 

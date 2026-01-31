@@ -1,0 +1,181 @@
+<div class="partner-registration">
+  <h1>파트너 계정 신청</h1>
+  <p class="subtitle">FitMe B2B API를 사용하기 위한 파트너 계정을 신청하세요.</p>
+
+  <%= form_with model: @partner, local: true, class: "partner-form" do |f| %>
+    <% if @partner.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@partner.errors.count, "error") %> prohibited this partner from being saved:</h3>
+        <ul>
+          <% @partner.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-section">
+      <h2>담당자 정보</h2>
+
+      <div class="form-group">
+        <%= f.label :name, "담당자 이름" %>
+        <%= f.text_field :name, required: true, placeholder: "홍길동" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :contact_email, "이메일" %>
+        <%= f.email_field :contact_email, required: true, placeholder: "contact@company.com" %>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>회사 정보</h2>
+
+      <div class="form-group">
+        <%= f.label :company_name, "회사명" %>
+        <%= f.text_field :company_name, required: true, placeholder: "주식회사 패션테크" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :website_url, "웹사이트 URL" %>
+        <%= f.url_field :website_url, placeholder: "https://www.company.com" %>
+      </div>
+    </div>
+
+    <div class="pricing-info">
+      <h2>구독 요금제</h2>
+      <div class="pricing-card">
+        <h3>월 정액제</h3>
+        <p class="price">₩50 / 월</p>
+        <ul class="features">
+          <li>✓ 무제한 API 호출</li>
+          <li>✓ 14일 무료 체험</li>
+          <li>✓ 전용 API 키 제공</li>
+          <li>✓ 기술 지원</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "파트너 계정 신청하기", class: "btn btn-primary" %>
+      <%= link_to "취소", root_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .partner-registration {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .subtitle {
+    color: #6b7280;
+    margin-bottom: 2rem;
+  }
+
+  .partner-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .form-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .form-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="url"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .pricing-info {
+    margin: 2rem 0;
+  }
+
+  .pricing-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .pricing-card .price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+  }
+
+  .pricing-card .features {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .pricing-card .features li {
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .error-messages {
+    background: #fee2e2;
+    border: 1px solid #ef4444;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+
+  .error-messages h3 {
+    color: #991b1b;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-messages ul {
+    color: #991b1b;
+    margin-left: 1.5rem;
+  }
+</style>

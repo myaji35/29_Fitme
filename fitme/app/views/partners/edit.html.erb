@@ -1,0 +1,238 @@
+<div class="partner-edit">
+  <h1>파트너 정보 수정</h1>
+
+  <%= form_with model: @partner, local: true, class: "partner-form" do |f| %>
+    <% if @partner.errors.any? %>
+      <div class="error-messages">
+        <h3><%= pluralize(@partner.errors.count, "error") %> prohibited this partner from being saved:</h3>
+        <ul>
+          <% @partner.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-section">
+      <h2>담당자 정보</h2>
+
+      <div class="form-group">
+        <%= f.label :name, "담당자 이름" %>
+        <%= f.text_field :name, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :contact_email, "이메일" %>
+        <%= f.email_field :contact_email, required: true %>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h2>회사 정보</h2>
+
+      <div class="form-group">
+        <%= f.label :company_name, "회사명" %>
+        <%= f.text_field :company_name, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :website_url, "웹사이트 URL" %>
+        <%= f.url_field :website_url %>
+      </div>
+    </div>
+
+    <% if current_user&.admin? %>
+      <div class="form-section admin-section">
+        <h2>구독 관리 (관리자 전용)</h2>
+
+        <div class="form-group">
+          <%= f.label :monthly_fee, "월 이용료 (₩)" %>
+          <%= f.number_field :monthly_fee, step: 0.01, min: 0 %>
+        </div>
+
+        <div class="subscription-actions">
+          <h3>구독 관리 액션</h3>
+          <div class="action-buttons">
+            <%= button_to "구독 갱신 (1개월 연장)",
+                          renew_subscription_partner_path(@partner),
+                          method: :post,
+                          class: "btn btn-success",
+                          data: { confirm: "구독을 1개월 연장하시겠습니까?" } %>
+
+            <%= button_to "구독 일시정지",
+                          suspend_subscription_partner_path(@partner),
+                          method: :post,
+                          class: "btn btn-warning",
+                          data: { confirm: "구독을 일시정지하시겠습니까?" } %>
+          </div>
+        </div>
+
+        <div class="current-subscription-info">
+          <h3>현재 구독 상태</h3>
+          <ul>
+            <li><strong>상태:</strong> <%= @partner.subscription_status.upcase %></li>
+            <li><strong>시작일:</strong> <%= l(@partner.subscription_started_at, format: :short) if @partner.subscription_started_at %></li>
+            <li><strong>만료일:</strong> <%= l(@partner.subscription_ends_at, format: :short) if @partner.subscription_ends_at %></li>
+            <li><strong>마지막 결제:</strong> <%= l(@partner.last_billed_at, format: :short) if @partner.last_billed_at %></li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-actions">
+      <%= f.submit "변경사항 저장", class: "btn btn-primary" %>
+      <%= link_to "취소", partner_path(@partner), class: "btn btn-secondary" %>
+      <%= link_to "목록으로", partners_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .partner-edit {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .partner-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .form-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .form-section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #1f2937;
+  }
+
+  .admin-section {
+    background: #fef3c7;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .admin-section h2 {
+    color: #92400e;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="url"],
+  .form-group input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .form-group input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .subscription-actions {
+    margin: 1.5rem 0;
+  }
+
+  .subscription-actions h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-success {
+    background: #10b981;
+    color: white;
+  }
+
+  .btn-success:hover {
+    background: #059669;
+  }
+
+  .btn-warning {
+    background: #f59e0b;
+    color: white;
+  }
+
+  .btn-warning:hover {
+    background: #d97706;
+  }
+
+  .current-subscription-info {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 6px;
+  }
+
+  .current-subscription-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+
+  .current-subscription-info ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .current-subscription-info li {
+    padding: 0.5rem 0;
+    color: #1f2937;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .error-messages {
+    background: #fee2e2;
+    border: 1px solid #ef4444;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 2rem;
+  }
+
+  .error-messages h3 {
+    color: #991b1b;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-messages ul {
+    color: #991b1b;
+    margin-left: 1.5rem;
+  }
+</style>

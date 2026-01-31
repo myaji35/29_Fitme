@@ -1,0 +1,142 @@
+<div class="partners-index">
+  <div class="header">
+    <h1>파트너 목록</h1>
+    <%= link_to "새 파트너 등록", new_partner_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if @partners.any? %>
+    <table class="partners-table">
+      <thead>
+        <tr>
+          <th>회사명</th>
+          <th>담당자</th>
+          <th>이메일</th>
+          <th>구독 상태</th>
+          <th>월 이용료</th>
+          <th>API 호출 수</th>
+          <th>구독 만료일</th>
+          <th>액션</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @partners.each do |partner| %>
+          <tr>
+            <td><strong><%= partner.company_name %></strong></td>
+            <td><%= partner.name %></td>
+            <td><%= partner.contact_email %></td>
+            <td>
+              <span class="status-badge <%= partner.subscription_status %>">
+                <%= partner.subscription_status.upcase %>
+              </span>
+            </td>
+            <td><%= number_to_currency(partner.monthly_fee, unit: "₩") %></td>
+            <td><%= number_with_delimiter(partner.api_calls_count) %></td>
+            <td>
+              <% if partner.subscription_ends_at %>
+                <%= l(partner.subscription_ends_at, format: :short) %>
+                <% if partner.days_until_expiry %>
+                  <br><small>(<%= partner.days_until_expiry %>일 남음)</small>
+                <% end %>
+              <% else %>
+                -
+              <% end %>
+            </td>
+            <td>
+              <%= link_to "보기", partner_path(partner), class: "btn btn-small" %>
+              <%= link_to "대시보드", dashboard_partner_path(partner), class: "btn btn-small" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state">
+      <p>등록된 파트너가 없습니다.</p>
+      <%= link_to "첫 파트너 등록하기", new_partner_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .partners-index {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .partners-table {
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-collapse: collapse;
+    overflow: hidden;
+  }
+
+  .partners-table th,
+  .partners-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .partners-table th {
+    background: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .partners-table tbody tr:hover {
+    background: #f9fafb;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+
+  .status-badge.trial {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .status-badge.active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-badge.suspended,
+  .status-badge.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .empty-state {
+    background: white;
+    padding: 4rem;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .empty-state p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+  }
+</style>

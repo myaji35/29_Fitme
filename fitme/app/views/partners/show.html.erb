@@ -1,0 +1,143 @@
+<div class="partner-details">
+  <h1>파트너 정보</h1>
+
+  <div class="detail-card">
+    <h2><%= @partner.company_name %></h2>
+
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>담당자</label>
+        <p><%= @partner.name %></p>
+      </div>
+
+      <div class="detail-item">
+        <label>이메일</label>
+        <p><%= @partner.contact_email %></p>
+      </div>
+
+      <div class="detail-item">
+        <label>웹사이트</label>
+        <p>
+          <% if @partner.website_url.present? %>
+            <%= link_to @partner.website_url, @partner.website_url, target: "_blank" %>
+          <% else %>
+            -
+          <% end %>
+        </p>
+      </div>
+
+      <div class="detail-item">
+        <label>API 키</label>
+        <p><code><%= @partner.api_key %></code></p>
+      </div>
+
+      <div class="detail-item">
+        <label>구독 상태</label>
+        <p class="status-badge <%= @partner.subscription_status %>">
+          <%= @partner.subscription_status.upcase %>
+        </p>
+      </div>
+
+      <div class="detail-item">
+        <label>월 이용료</label>
+        <p><%= number_to_currency(@partner.monthly_fee, unit: "₩") %></p>
+      </div>
+
+      <div class="detail-item">
+        <label>구독 시작일</label>
+        <p><%= l(@partner.subscription_started_at, format: :short) if @partner.subscription_started_at %></p>
+      </div>
+
+      <div class="detail-item">
+        <label>구독 만료일</label>
+        <p><%= l(@partner.subscription_ends_at, format: :short) if @partner.subscription_ends_at %></p>
+      </div>
+
+      <div class="detail-item">
+        <label>총 API 호출 수</label>
+        <p><%= number_with_delimiter(@partner.api_calls_count) %></p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= link_to "대시보드", dashboard_partner_path(@partner), class: "btn btn-primary" %>
+      <%= link_to "정보 수정", edit_partner_path(@partner), class: "btn btn-secondary" %>
+      <%= link_to "목록으로", partners_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>
+
+<style>
+  .partner-details {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+
+  .detail-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .detail-item label {
+    display: block;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .detail-item p {
+    font-size: 1.1rem;
+    color: #1f2937;
+  }
+
+  .detail-item code {
+    background: #f3f4f6;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .status-badge.trial {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .status-badge.active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-badge.suspended,
+  .status-badge.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+  }
+</style>

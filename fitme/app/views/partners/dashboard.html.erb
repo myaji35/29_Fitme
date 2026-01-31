@@ -1,0 +1,194 @@
+<div class="partner-dashboard">
+  <h1><%= @partner.name %> - B2B 대시보드</h1>
+
+  <div class="subscription-info">
+    <h2>구독 정보</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>구독 상태</h3>
+        <p class="status-badge <%= @partner.subscription_status %>">
+          <%= @partner.subscription_status.upcase %>
+        </p>
+        <% if @days_until_expiry %>
+          <p class="expiry-info">
+            만료까지 <strong><%= @days_until_expiry %>일</strong> 남음
+          </p>
+        <% end %>
+      </div>
+
+      <div class="info-card">
+        <h3>월 이용료</h3>
+        <p class="fee-amount"><%= number_to_currency(@partner.monthly_fee, unit: "₩") %>/월</p>
+        <% if @partner.last_billed_at %>
+          <p class="last-billed">마지막 결제: <%= l(@partner.last_billed_at, format: :short) %></p>
+        <% end %>
+      </div>
+
+      <div class="info-card">
+        <h3>총 API 호출 수</h3>
+        <p class="api-count"><%= number_with_delimiter(@total_api_calls) %></p>
+        <p class="this-month">이번 달: <%= number_with_delimiter(@this_month_calls) %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="api-credentials">
+    <h2>API 자격 증명</h2>
+    <div class="credential-box">
+      <label>API Key:</label>
+      <code id="api-key"><%= @partner.api_key %></code>
+      <button onclick="copyToClipboard()" class="btn btn-small">복사</button>
+    </div>
+    <p class="api-docs-link">
+      <%= link_to "API 문서 보기", "#", class: "btn btn-secondary" %>
+    </p>
+  </div>
+
+  <div class="usage-logs">
+    <h2>최근 API 사용 내역</h2>
+    <% if @api_usage_logs.any? %>
+      <table class="usage-table">
+        <thead>
+          <tr>
+            <th>시간</th>
+            <th>요청 타입</th>
+            <th>Avatar ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @api_usage_logs.each do |log| %>
+            <tr>
+              <td><%= l(log.created_at, format: :short) %></td>
+              <td><%= log.request_type %></td>
+              <td><code><%= log.profile.secure_id %></code></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>아직 API 사용 내역이 없습니다.</p>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  function copyToClipboard() {
+    const apiKey = document.getElementById('api-key').textContent;
+    navigator.clipboard.writeText(apiKey).then(() => {
+      alert('API 키가 클립보드에 복사되었습니다!');
+    });
+  }
+</script>
+
+<style>
+  .partner-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .subscription-info,
+  .api-credentials,
+  .usage-logs {
+    background: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+  .status-badge.trial {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .status-badge.active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-badge.suspended,
+  .status-badge.cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .fee-amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1e40af;
+    margin: 0.5rem 0;
+  }
+
+  .api-count {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #059669;
+    margin: 0.5rem 0;
+  }
+
+  .credential-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f3f4f6;
+    border-radius: 4px;
+  }
+
+  .credential-box code {
+    flex: 1;
+    padding: 0.5rem;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+  .usage-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  .usage-table th,
+  .usage-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .usage-table th {
+    background: #f9fafb;
+    font-weight: 600;
+  }
+
+  .usage-table code {
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+  }
+</style>
