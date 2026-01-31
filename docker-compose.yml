@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # Rails Application
+  rails:
+    build:
+      context: ./fitme
+      dockerfile: Dockerfile
+    container_name: fitme_rails
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=development
+      - AI_SERVICE_URL=http://ai_service:8000
+      - DATABASE_URL=sqlite3:storage/development.sqlite3
+    volumes:
+      - ./fitme:/app
+      - rails_storage:/app/storage
+      - rails_tmp:/app/tmp
+    depends_on:
+      - ai_service
+    networks:
+      - fitme_network
+    command: bin/rails server -b 0.0.0.0
+
+  # Python AI Microservice
+  ai_service:
+    build:
+      context: ./ai_service
+      dockerfile: Dockerfile
+    container_name: fitme_ai_service
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./ai_service:/app
+      - ai_models:/app/models
+    networks:
+      - fitme_network
+    # Uncomment if you have GPU support
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  rails_storage:
+  rails_tmp:
+  ai_models:
+
+networks:
+  fitme_network:
+    driver: bridge
