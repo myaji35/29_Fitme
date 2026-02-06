@@ -1,3 +1,13 @@
+
+# [0029] Fitme
+
+## Identity
+- **ID**: 0029
+- **Category**: SaaS
+- **Governance**: [9999] Master Root
+- **Status**: Sentinel-Standardized
+
+---
 # FitMe (핏미)
 
 AI 패션 플랫폼: 전신 사진 한 장으로 360도 3D 아바타 생성 및 가상 피팅 서비스

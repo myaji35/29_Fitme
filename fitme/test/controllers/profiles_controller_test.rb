@@ -1,18 +1,23 @@
 require "test_helper"
 
 class ProfilesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:one)
+    sign_in @user
+  end
+
   test "should get show" do
-    get profiles_show_url
+    get profile_url
     assert_response :success
   end
 
   test "should get edit" do
-    get profiles_edit_url
+    get edit_profile_url
     assert_response :success
   end
 
-  test "should get update" do
-    get profiles_update_url
-    assert_response :success
+  test "should update profile" do
+    patch profile_url, params: { profile: { height_cm: 180, weight_kg: 75 } }
+    assert_response :redirect
   end
 end

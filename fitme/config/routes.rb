@@ -12,6 +12,9 @@ Rails.application.routes.draw do
 
   # Resources
   resources :items do
+    collection do
+      post :analyze_image
+    end
     member do
       post :try_on
     end

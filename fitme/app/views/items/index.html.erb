@@ -1,43 +1,758 @@
-<div class="items-page">
-  <div class="header">
-    <h1>내 옷장</h1>
-    <%= link_to "새 아이템 추가", new_item_path, class: "btn btn-primary" %>
+<div class="items-page-modern">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="6" y="4" width="20" height="24" rx="2"/>
+          <line x1="10" y1="10" x2="22" y2="10"/>
+          <line x1="10" y1="15" x2="22" y2="15"/>
+          <line x1="10" y1="20" x2="18" y2="20"/>
+        </svg>
+        <div>
+          <h1>내 옷장</h1>
+          <p class="subtitle">총 <%= @items.count %>개의 아이템</p>
+        </div>
+      </div>
+      <%= link_to new_item_path, class: "btn-add-item" do %>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="10" cy="10" r="8"/>
+          <line x1="10" y1="6" x2="10" y2="14"/>
+          <line x1="6" y1="10" x2="14" y2="10"/>
+        </svg>
+        <span>새 아이템 추가</span>
+      <% end %>
+    </div>
   </div>
 
-  <div class="filters">
-    <%= form_with url: items_path, method: :get, local: true do |f| %>
-      <%= f.select :category, options_for_select([["전체", ""], ["상의", "top"], ["하의", "bottom"], ["아우터", "outer"], ["신발", "shoes"]], params[:category]), {}, class: "filter-select" %>
-      <%= f.select :season, options_for_select([["전체 계절", ""], ["봄", "spring"], ["여름", "summer"], ["가을", "fall"], ["겨울", "winter"]], params[:season]), {}, class: "filter-select" %>
-      <%= f.submit "필터 적용", class: "btn btn-secondary" %>
+  <!-- Filters & View Toggle -->
+  <div class="filters-section">
+    <%= form_with url: items_path, method: :get, local: true, class: "filters-form" do |f| %>
+      <div class="filter-group">
+        <label>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Hook -->
+            <path d="M8 1.5 Q8 1 8.5 1 Q9 1 9 1.5 Q9 2 8.5 2.5 L8 4"/>
+            <!-- Shoulders -->
+            <path d="M8 4 L3 7 L3 12"/>
+            <path d="M8 4 L13 7 L13 12"/>
+            <!-- Bottom bar -->
+            <line x1="3" y1="12" x2="13" y2="12"/>
+          </svg>
+          카테고리
+        </label>
+        <%= f.select :category,
+          options_for_select([
+            ["전체", ""],
+            ["상의", "top"],
+            ["하의", "bottom"],
+            ["아우터", "outer"],
+            ["신발", "shoes"]
+          ], params[:category]),
+          {},
+          class: "filter-select"
+        %>
+      </div>
+
+      <div class="filter-group">
+        <label>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="8" cy="8" r="4"/>
+            <line x1="8" y1="1" x2="8" y2="2"/>
+            <line x1="8" y1="14" x2="8" y2="15"/>
+            <line x1="2.34" y1="2.34" x2="3.05" y2="3.05"/>
+            <line x1="12.95" y1="12.95" x2="13.66" y2="13.66"/>
+            <line x1="1" y1="8" x2="2" y2="8"/>
+            <line x1="14" y1="8" x2="15" y2="8"/>
+            <line x1="2.34" y1="13.66" x2="3.05" y2="12.95"/>
+            <line x1="12.95" y1="3.05" x2="13.66" y2="2.34"/>
+          </svg>
+          계절
+        </label>
+        <%= f.select :season,
+          options_for_select([
+            ["전체 계절", ""],
+            ["봄", "spring"],
+            ["여름", "summer"],
+            ["가을", "fall"],
+            ["겨울", "winter"]
+          ], params[:season]),
+          {},
+          class: "filter-select"
+        %>
+      </div>
+
+      <%= f.submit "적용", class: "btn-filter-apply" %>
+      <%= link_to "초기화", items_path, class: "btn-filter-reset" %>
     <% end %>
+
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <rect x="2" y="2" width="6" height="6" rx="1"/>
+          <rect x="12" y="2" width="6" height="6" rx="1"/>
+          <rect x="2" y="12" width="6" height="6" rx="1"/>
+          <rect x="12" y="12" width="6" height="6" rx="1"/>
+        </svg>
+      </button>
+      <button class="view-btn" data-view="list">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <rect x="2" y="3" width="16" height="3" rx="1"/>
+          <rect x="2" y="8.5" width="16" height="3" rx="1"/>
+          <rect x="2" y="14" width="16" height="3" rx="1"/>
+        </svg>
+      </button>
+    </div>
   </div>
 
+  <!-- Items Grid -->
   <% if @items.any? %>
-    <div class="items-grid">
+    <div class="items-grid" data-view="grid">
       <% @items.each do |item| %>
-        <div class="item-card">
-          <%= link_to item_path(item) do %>
-            <% if item.image.attached? %>
-              <%= image_tag item.image, alt: item.category, class: "item-image" %>
-            <% else %>
-              <div class="placeholder">No Image</div>
-            <% end %>
-            <div class="item-info">
-              <h3><%= item.category&.capitalize %></h3>
-              <p><%= item.color %> | <%= item.season&.capitalize %></p>
+        <div class="item-card-modern">
+          <%= link_to item_path(item), class: "item-link-modern" do %>
+            <div class="item-image-container">
+              <% if item.image.attached? %>
+                <%= image_tag item.image, alt: item.category, class: "item-image" %>
+              <% else %>
+                <div class="item-placeholder">
+                  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.3">
+                    <!-- Hook -->
+                    <path d="M40 8 Q40 6 42 6 Q44 6 44 8 Q44 10 42 12 L40 20"/>
+                    <!-- Shoulders -->
+                    <path d="M40 20 L16 36 L16 60"/>
+                    <path d="M40 20 L64 36 L64 60"/>
+                    <!-- Bottom bar -->
+                    <line x1="16" y1="60" x2="64" y2="60"/>
+                  </svg>
+                  <p>이미지 없음</p>
+                </div>
+              <% end %>
+              <div class="item-overlay"
+                   data-controller="eye-tracker"
+                   data-action="mouseenter->eye-tracker#mouseEnter mouseleave->eye-tracker#mouseLeave">
+                <div class="quick-actions">
+                  <!-- Eyes watching you! -->
+                  <div class="eye-container">
+                    <div class="eye left-eye" data-eye-tracker-target="eye">
+                      <div class="pupil" data-eye-tracker-target="pupil"></div>
+                    </div>
+                    <div class="eye right-eye" data-eye-tracker-target="eye">
+                      <div class="pupil" data-eye-tracker-target="pupil"></div>
+                    </div>
+                  </div>
+                  <!-- Hidden action buttons (activated on click) -->
+                  <div class="hidden-actions">
+                    <%= link_to try_on_item_path(item), method: :post, class: "quick-action-btn-hidden", title: "가상 피팅" do %>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="10" cy="7" r="3"/>
+                        <path d="M4 18 C4 14 7 12 10 12 C13 12 16 14 16 18"/>
+                      </svg>
+                      <span>가상 피팅</span>
+                    <% end %>
+                    <%= link_to edit_item_path(item), class: "quick-action-btn-hidden", title: "수정" do %>
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2 L18 6 L7 17 L3 18 L4 14 Z"/>
+                      </svg>
+                      <span>수정</span>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item-info-modern">
+              <div class="item-category-badge">
+                <%= case item.category
+                    when 'top' then '상의'
+                    when 'bottom' then '하의'
+                    when 'outer' then '아우터'
+                    when 'shoes' then '신발'
+                    else item.category
+                    end %>
+              </div>
+              <div class="item-details">
+                <div class="item-color-indicator" style="background-color: <%= item.color %>;"></div>
+                <span class="item-season">
+                  <%= case item.season
+                      when 'spring' then '봄'
+                      when 'summer' then '여름'
+                      when 'fall' then '가을'
+                      when 'winter' then '겨울'
+                      else item.season
+                      end %>
+                </span>
+              </div>
             </div>
           <% end %>
-          <div class="item-actions">
-            <%= link_to "수정", edit_item_path(item), class: "btn-small" %>
-            <%= button_to "삭제", item_path(item), method: :delete, data: { confirm: "정말 삭제하시겠습니까?" }, class: "btn-small btn-danger" %>
+          <div class="item-actions-bottom">
+            <%= button_to item_path(item), method: :delete,
+                data: { confirm: "정말 삭제하시겠습니까?" },
+                class: "btn-delete-item" do %>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 4 L14 4 M6 4 L6 2 L10 2 L10 4 M6 7 L6 12 M10 7 L10 12"/>
+                <rect x="3" y="4" width="10" height="11" rx="1"/>
+              </svg>
+              삭제
+            <% end %>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-state">
-      <p>아직 추가한 아이템이 없습니다.</p>
-      <%= link_to "첫 아이템 추가하기", new_item_path, class: "btn btn-primary" %>
+    <div class="empty-state-large">
+      <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+        <defs>
+          <linearGradient id="empty-wardrobe-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:0.3" />
+            <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:0.3" />
+          </linearGradient>
+        </defs>
+        <!-- Wardrobe illustration -->
+        <rect x="40" y="30" width="120" height="140" rx="8" fill="url(#empty-wardrobe-grad)" stroke="currentColor" stroke-width="3"/>
+        <line x1="100" y1="30" x2="100" y2="170" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+        <circle cx="85" cy="100" r="4" fill="currentColor" opacity="0.5"/>
+        <circle cx="115" cy="100" r="4" fill="currentColor" opacity="0.5"/>
+        <!-- Hanger -->
+        <path d="M100 80 Q90 75 85 75 L85 72 Q85 68 88 68 L112 68 Q115 68 115 72 L115 75 Q110 75 100 80"
+              stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
+        <line x1="85" y1="75" x2="85" y2="85" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+        <line x1="115" y1="75" x2="115" y2="85" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+      </svg>
+      <h2>옷장이 비어있어요</h2>
+      <p>첫 번째 아이템을 추가하고 스타일을 관리해보세요!</p>
+      <%= link_to new_item_path, class: "btn-primary-large" do %>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        <span>첫 아이템 추가하기</span>
+      <% end %>
     </div>
   <% end %>
 </div>
+
+<style>
+.items-page-modern {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title svg {
+  color: var(--color-teal);
+}
+
+.header-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+.btn-add-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-teal) 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.btn-add-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.filters-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.filters-form {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.filter-group label svg {
+  color: var(--color-teal);
+}
+
+.filter-select {
+  padding: 0.625rem 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: white;
+  min-width: 150px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px rgba(93, 185, 174, 0.1);
+}
+
+.btn-filter-apply {
+  padding: 0.625rem 1.25rem;
+  background: var(--color-teal);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-filter-apply:hover {
+  background: var(--color-teal-dark);
+}
+
+.btn-filter-reset {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-filter-reset:hover {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--color-bg-light);
+  padding: 0.25rem;
+  border-radius: var(--radius-md);
+}
+
+.view-btn {
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.view-btn:hover {
+  background: white;
+}
+
+.view-btn.active {
+  background: white;
+  color: var(--color-teal);
+  box-shadow: var(--shadow-sm);
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.item-card-modern {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.item-card-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.item-link-modern {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.item-image-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 1:1 aspect ratio */
+  background: var(--color-bg-light);
+  overflow: hidden;
+}
+
+.item-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.item-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.item-placeholder p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 58, 82, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.item-card-modern:hover .item-overlay {
+  opacity: 1;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Eye Container */
+.eye-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.eye {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.eye:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.pupil {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle, #1A3A52 0%, #0D1F2D 100%);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-out;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Pupil animation - automatic movement */
+@keyframes lookAround {
+  0%, 100% {
+    transform: translate(-50%, -50%);
+  }
+  10% {
+    transform: translate(calc(-50% + 8px), calc(-50% - 6px));
+  }
+  25% {
+    transform: translate(calc(-50% + 10px), calc(-50% + 4px));
+  }
+  40% {
+    transform: translate(calc(-50% - 6px), calc(-50% + 8px));
+  }
+  55% {
+    transform: translate(calc(-50% - 10px), calc(-50% - 4px));
+  }
+  70% {
+    transform: translate(calc(-50% + 4px), calc(-50% - 10px));
+  }
+  85% {
+    transform: translate(calc(-50% - 8px), calc(-50% + 6px));
+  }
+}
+
+.pupil {
+  animation: lookAround 5s ease-in-out infinite;
+}
+
+/* Stop animation on hover */
+.item-overlay:hover .pupil {
+  animation: none !important;
+}
+
+/* Blink effect */
+@keyframes blink {
+  0%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+.eye {
+  animation: blink 6s ease-in-out infinite;
+}
+
+/* Hidden action buttons */
+.hidden-actions {
+  display: flex;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.item-overlay:hover .hidden-actions {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.quick-action-btn-hidden {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: white;
+  border-radius: var(--radius-md);
+  color: var(--color-navy);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.quick-action-btn-hidden:hover {
+  background: var(--color-lime);
+  transform: scale(1.05);
+}
+
+.item-info-modern {
+  padding: 1rem;
+}
+
+.item-category-badge {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: linear-gradient(135deg, var(--color-teal-light) 0%, var(--color-teal) 100%);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.item-color-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.item-season {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.item-actions-bottom {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-delete-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-item:hover {
+  background: var(--color-danger);
+  color: white;
+}
+
+.empty-state-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 500px;
+}
+
+.empty-state-large svg {
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.empty-state-large h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state-large p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 2rem 0;
+  max-width: 400px;
+}
+
+.btn-primary-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-teal) 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.btn-primary-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(93, 185, 174, 0.3);
+}
+
+@media (max-width: 768px) {
+  .items-page-modern {
+    padding: 1rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+}
+</style>

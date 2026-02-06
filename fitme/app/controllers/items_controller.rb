@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!
+  # Development: Skip authentication for demo purposes
+  # before_action :authenticate_user!
+  before_action :ensure_demo_user
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -24,6 +26,16 @@ class ItemsController < ApplicationController
 
   def new
     @item = current_user.items.build
+  end
+
+  def analyze_image
+    # AI 이미지 분석 API 엔드포인트
+    if params[:image].present?
+      result = analyze_item_image(params[:image])
+      render json: result
+    else
+      render json: { error: "이미지가 필요합니다." }, status: :unprocessable_entity
+    end
   end
 
   def create
@@ -60,11 +72,75 @@ class ItemsController < ApplicationController
 
   private
 
+  def ensure_demo_user
+    unless user_signed_in?
+      demo_user = User.find_or_create_by!(email: 'demo@fitme.com') do |user|
+        user.password = 'password123'
+        user.password_confirmation = 'password123'
+      end
+      sign_in(demo_user)
+    end
+  end
+
   def set_item
     @item = current_user.items.find(params[:id])
   end
 
   def item_params
     params.require(:item).permit(:category, :color, :season, :image)
+  end
+
+  def analyze_item_image(image_file)
+    # 간단한 AI 분석 로직 (추후 Python 서비스 연동 시 교체)
+    # 현재는 파일명과 기본 규칙으로 추정
+
+    filename = image_file.original_filename.downcase
+
+    # 카테고리 추정
+    category = if filename.include?('shirt') || filename.include?('top') || filename.include?('sweater') || filename.include?('tshirt')
+                 'top'
+               elsif filename.include?('pant') || filename.include?('jean') || filename.include?('bottom') || filename.include?('trouser')
+                 'bottom'
+               elsif filename.include?('coat') || filename.include?('jacket') || filename.include?('outer')
+                 'outer'
+               elsif filename.include?('shoe') || filename.include?('sneaker') || filename.include?('boot')
+                 'shoes'
+               else
+                 'top' # 기본값
+               end
+
+    # 색상 추정 (파일명 기반)
+    color = if filename.include?('black') || filename.include?('검정')
+              '검정색'
+            elsif filename.include?('white') || filename.include?('흰')
+              '흰색'
+            elsif filename.include?('blue') || filename.include?('파랑')
+              '파란색'
+            elsif filename.include?('red') || filename.include?('빨강')
+              '빨간색'
+            elsif filename.include?('beige') || filename.include?('베이지')
+              '베이지'
+            elsif filename.include?('gray') || filename.include?('회')
+              '회색'
+            else
+              '' # 빈 값으로 사용자가 직접 입력하도록
+            end
+
+    # 계절 추정 (카테고리 기반 기본 추천)
+    season = case category
+             when 'outer'
+               'winter'
+             when 'shoes'
+               'spring'
+             else
+               'spring' # 기본값
+             end
+
+    {
+      category: category,
+      color: color,
+      season: season,
+      confidence: 0.7 # AI 신뢰도 (추후 실제 AI 사용 시 반영)
+    }
   end
 end

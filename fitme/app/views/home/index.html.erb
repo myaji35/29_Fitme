@@ -1,28 +1,1938 @@
-<div class="hero">
-  <h1>FitMe - AI 패션 플랫폼</h1>
-  <p>전신 사진 한 장으로 나만의 3D 아바타를 생성하고, 가상 피팅과 코디 추천을 경험하세요!</p>
+<!-- Hero Section - Card Carousel Style -->
+<div class="hero hero-carousel">
+  <div class="hero-header">
+    <p class="hero-subtitle">당신의 지능형 패션 에이전트</p>
+    <h1 class="hero-title"><span class="gradient-text">옷장은 가볍게</span>,<br>스타일은 완벽하게</h1>
+    <p class="hero-description">Clawdbot이 제안하는 초개인화 스타일링<br>Fashion Second Brain - 사진 한 장으로 시작하는 똑똑한 옷장 관리</p>
+  </div>
 
-  <% unless user_signed_in? %>
-    <div class="cta-buttons">
-      <%= link_to "시작하기", new_user_registration_path, class: "btn btn-primary" %>
-      <%= link_to "로그인", new_user_session_path, class: "btn btn-secondary" %>
+  <!-- 3-Card Carousel Layout -->
+  <div class="card-carousel-container">
+    <div class="card-carousel">
+      <!-- Card 1: Avatar View (3D 착용 모습) -->
+      <div class="carousel-card avatar-card">
+        <div class="card-content">
+          <div class="avatar-view-wrapper">
+            <!-- 3D Avatar Image - Real 3D Rendered Character -->
+            <%= image_tag "hero-avatar.png", alt: "3D Avatar Character", class: "hero-avatar-image" %>
+          </div>
+          <div class="card-label-overlay">
+            <span class="user-name">Min-su's Fit</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Items View (누끼 아이템 Knolling) -->
+      <div class="carousel-card items-card">
+        <div class="card-content">
+          <div class="items-knolling">
+            <!-- Item 1: Sweater -->
+            <div class="knolling-item item-sweater">
+              <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+                <path d="M40 35 L40 25 L60 15 L70 10 L80 15 L100 25 L100 35" stroke="#8B7355" stroke-width="2" fill="none"/>
+                <rect x="40" y="35" width="60" height="90" rx="4" fill="#F5E6D3" stroke="#8B7355" stroke-width="2"/>
+                <line x1="70" y1="10" x2="70" y2="125" stroke="#8B7355" stroke-width="2"/>
+              </svg>
+              <div class="item-info">
+                <span class="item-brand">Uniqlo</span>
+                <span class="item-price">₩49,000</span>
+              </div>
+            </div>
+
+            <!-- Item 2: Pants -->
+            <div class="knolling-item item-pants">
+              <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+                <rect x="45" y="20" width="50" height="12" fill="#2C2C2C" rx="2"/>
+                <path d="M55 32 L50 120 M85 32 L90 120" stroke="#2C2C2C" stroke-width="16" fill="none" stroke-linecap="round"/>
+              </svg>
+              <div class="item-info">
+                <span class="item-brand">Zara</span>
+                <span class="item-price">₩69,000</span>
+              </div>
+            </div>
+
+            <!-- Item 3: Shirt -->
+            <div class="knolling-item item-shirt">
+              <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+                <rect x="40" y="35" width="60" height="90" rx="4" fill="#FFFFFF" stroke="#D4D4D4" stroke-width="2"/>
+                <path d="M40 35 L40 25 L60 15 L70 10 L80 15 L100 25 L100 35" stroke="#D4D4D4" stroke-width="2" fill="none"/>
+                <line x1="70" y1="35" x2="70" y2="125" stroke="#D4D4D4" stroke-width="2"/>
+                <circle cx="70" cy="55" r="3" fill="#D4D4D4"/>
+                <circle cx="70" cy="75" r="3" fill="#D4D4D4"/>
+              </svg>
+              <div class="item-info">
+                <span class="item-brand">H&M</span>
+                <span class="item-price">₩39,000</span>
+              </div>
+            </div>
+
+            <!-- Item 4: Coat -->
+            <div class="knolling-item item-coat">
+              <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+                <rect x="35" y="20" width="70" height="110" rx="6" fill="#C8B8A0" opacity="0.9"/>
+                <path d="M35 30 L45 40 L45 130 M105 30 L95 40 L95 130" stroke="#A89880" stroke-width="3" fill="none"/>
+                <line x1="70" y1="20" x2="70" y2="130" stroke="#8B7355" stroke-width="2"/>
+              </svg>
+              <div class="item-info">
+                <span class="item-brand">COS</span>
+                <span class="item-price">₩189,000</span>
+              </div>
+            </div>
+
+            <!-- Item 5: Boots -->
+            <div class="knolling-item item-boots">
+              <svg width="120" height="100" viewBox="0 0 120 100" fill="none">
+                <rect x="35" y="20" width="50" height="50" rx="4" fill="#8B4513"/>
+                <ellipse cx="60" cy="70" rx="35" ry="18" fill="#6B3410"/>
+                <line x1="35" y1="40" x2="85" y2="40" stroke="#6B3410" stroke-width="2"/>
+              </svg>
+              <div class="item-info">
+                <span class="item-brand">Dr.Martens</span>
+                <span class="item-price">₩259,000</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-label-overlay">
+            <span class="card-title">Recommended Items</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Preview (다음 추천 미리보기) -->
+      <div class="carousel-card preview-card">
+        <div class="card-content">
+          <div class="preview-wrapper">
+            <div class="preview-blur">
+              <svg width="100%" height="100%" viewBox="0 0 400 600" fill="none">
+                <rect width="400" height="600" fill="#E8F5F3"/>
+                <g transform="translate(200, 120)">
+                  <circle cx="0" cy="0" r="40" fill="#D4D4D4" opacity="0.5"/>
+                  <rect x="-60" y="60" width="120" height="200" rx="8" fill="#D4D4D4" opacity="0.4"/>
+                  <rect x="-50" y="280" width="45" height="140" rx="4" fill="#A8A8A8" opacity="0.4"/>
+                  <rect x="5" y="280" width="45" height="140" rx="4" fill="#A8A8A8" opacity="0.4"/>
+                </g>
+              </svg>
+            </div>
+            <div class="preview-label">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 10 L25 20 L15 30"/>
+              </svg>
+              <span>Next</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
+  </div>
+
+  <!-- CTA Button -->
+  <div class="hero-cta">
+    <% unless user_signed_in? %>
+      <%= link_to new_user_registration_path, class: "btn-cta-large" do %>
+        <span>내 아바타 만들기</span>
+        <span class="badge-free">Free</span>
+      <% end %>
+    <% else %>
+      <%= link_to dashboard_path, class: "btn-cta-large" do %>
+        <span>대시보드로 이동</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M9 5l7 7-7 7"/>
+        </svg>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
+<style>
+/* =================================
+   HERO CAROUSEL SECTION STYLES
+   ================================= */
+
+/* Hero Header */
+.hero-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -1px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-lime) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-sm);
+}
+
+/* Card Carousel Container */
+.card-carousel-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.card-carousel {
+  display: flex;
+  gap: var(--spacing-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--spacing-sm) 0 var(--spacing-lg);
+  scrollbar-width: none;
+}
+
+.card-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Carousel Card Base */
+.carousel-card {
+  flex: 0 0 calc(33.333% - 1rem);
+  min-width: 380px;
+  height: 620px;
+  scroll-snap-align: center;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.carousel-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.2);
+}
+
+.card-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.card-label-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  color: white;
+  z-index: 10;
+}
+
+.user-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Avatar Card */
+.avatar-card {
+  background: linear-gradient(135deg, #E8F5F3 0%, #D4E9E6 100%);
+}
+
+.avatar-view-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Items Card - Knolling Layout */
+.items-card {
+  background: #FAFAFA;
+}
+
+.items-knolling {
+  width: 100%;
+  height: 100%;
+  padding: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: var(--spacing-md);
+  align-items: center;
+  justify-items: center;
+}
+
+.knolling-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: var(--spacing-sm);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.knolling-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.item-boots {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.item-brand {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.item-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+
+/* Preview Card */
+.preview-card {
+  background: #F0F0F0;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-blur {
+  width: 100%;
+  height: 100%;
+  filter: blur(8px);
+  opacity: 0.4;
+}
+
+.preview-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-gray-dark);
+}
+
+.preview-label span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.preview-label svg {
+  color: var(--color-teal);
+}
+
+/* CTA Button */
+.hero-cta {
+  margin-top: var(--spacing-lg);
+  text-align: center;
+}
+
+.btn-cta-large {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 20px 48px;
+  background: linear-gradient(135deg, var(--color-lime) 0%, #C5D11B 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: 0 12px 40px rgba(212, 225, 87, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cta-large::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-cta-large:hover::before {
+  width: 400px;
+  height: 400px;
+}
+
+.btn-cta-large:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(212, 225, 87, 0.5);
+}
+
+.badge-free {
+  padding: 4px 12px;
+  background: var(--color-teal);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes card-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.carousel-card {
+  animation: card-float 6s ease-in-out infinite;
+}
+
+.avatar-card {
+  animation-delay: 0s;
+}
+
+.items-card {
+  animation-delay: 0.5s;
+}
+
+.preview-card {
+  animation-delay: 1s;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .carousel-card {
+    flex: 0 0 calc(40% - 1rem);
+    min-width: 340px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .carousel-card {
+    flex: 0 0 calc(60% - 1rem);
+    min-width: 320px;
+    height: 580px;
+  }
+
+  .card-carousel {
+    padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-carousel {
+    padding: var(--spacing-md) var(--spacing-sm) var(--spacing-lg);
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .carousel-card {
+    flex: 0 0 85%;
+    min-width: 280px;
+    height: 520px;
+  }
+
+  .card-carousel {
+    gap: var(--spacing-sm);
+  }
+
+  .items-knolling {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+  }
+
+  .knolling-item svg {
+    width: 100px;
+    height: auto;
+  }
+
+  .btn-cta-large {
+    padding: 18px 36px;
+    font-size: 1.1rem;
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .user-name, .card-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-card {
+    flex: 0 0 90%;
+    min-width: 260px;
+    height: 480px;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* =================================
+   PROBLEM STATEMENT SECTION
+   ================================= */
+
+.problem-section {
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.problem-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.problem-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+.highlight-text {
+  color: #FF6B6B;
+  position: relative;
+}
+
+.problem-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.problems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.problem-card {
+  background: white;
+  border-radius: 20px;
+  padding: var(--spacing-lg);
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.problem-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+  border-color: var(--color-teal);
+}
+
+.problem-icon {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.problem-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.4;
+}
+
+.en-subtitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  opacity: 0.7;
+}
+
+.problem-card p {
+  font-size: 1rem;
+  color: var(--color-gray-dark);
+  line-height: 1.7;
+}
+
+.solution-teaser {
+  background: linear-gradient(135deg, #E8F5F3 0%, #F0F7E6 100%);
+  border-radius: 24px;
+  padding: var(--spacing-xl);
+  text-align: center;
+  margin-top: var(--spacing-xl);
+  border: 3px solid var(--color-teal);
+}
+
+.solution-icon {
+  margin-bottom: var(--spacing-md);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.solution-teaser h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+}
+
+.solution-teaser p {
+  font-size: 1.1rem;
+  color: var(--color-gray-dark);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .problem-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .problems-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .solution-teaser h3 {
+    font-size: 1.4rem;
+  }
+}
+
+/* =================================
+   FASHION SECOND BRAIN SECTION
+   ================================= */
+
+.fashion-second-brain {
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: white;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-md);
+}
+
+.core-elements-venn {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto var(--spacing-xl);
+  position: relative;
+}
+
+.venn-circle {
+  background: white;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+  border: 3px solid transparent;
+}
+
+.venn-left {
+  border-color: #8DD5CC;
+  background: linear-gradient(135deg, #E8F5F3 0%, #FFFFFF 100%);
+}
+
+.venn-right {
+  border-color: #D4E157;
+  background: linear-gradient(135deg, #F0F7E6 0%, #FFFFFF 100%);
+}
+
+.venn-bottom {
+  grid-column: 1 / -1;
+  max-width: 400px;
+  margin: 0 auto;
+  border-color: #5BB9AE;
+  background: linear-gradient(135deg, #E3F2FD 0%, #FFFFFF 100%);
+}
+
+.venn-circle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+}
+
+.venn-content {
+  text-align: center;
+}
+
+.venn-icon {
+  margin-bottom: var(--spacing-md);
+  animation: float 3s ease-in-out infinite;
+}
+
+.venn-circle h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+}
+
+.core-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-gray-dark);
+  line-height: 1.6;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.core-elements-detail {
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .core-elements-venn {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .venn-bottom {
+    grid-column: 1;
+  }
+}
+
+/* =================================
+   SCENARIOS SECTION
+   ================================= */
+
+.scenarios-section {
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.scenarios-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.scenario-card {
+  background: white;
+  border-radius: 24px;
+  padding: var(--spacing-xl);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  border: 2px solid #E8F5F3;
+  transition: all 0.3s ease;
+}
+
+.scenario-card:hover {
+  box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+
+.scenario-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.scenario-number {
+  display: inline-block;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-lime) 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.scenario-card h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-sm);
+}
+
+.highlight-teal {
+  color: var(--color-teal);
+}
+
+.highlight-lime {
+  color: #B8CE32;
+}
+
+.scenario-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-sm);
+}
+
+.scenario-flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.flow-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.flow-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.flow-label .sub {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.flow-content {
+  background: #F8F9FA;
+  border-radius: 16px;
+  padding: var(--spacing-md);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.context-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.context-item p {
+  font-size: 0.85rem;
+  color: var(--color-gray-dark);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.processing-box, .analysis-box, .suggestion-bubble, .output-phone, .action-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.processing-box p, .analysis-box p, .output-phone p, .action-box p {
+  font-size: 0.85rem;
+  color: var(--color-gray-dark);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: var(--color-teal);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.scenario-footer {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: linear-gradient(135deg, #E8F5F3 0%, #F0F7E6 100%);
+  border-radius: 20px;
+  margin-top: var(--spacing-xl);
+}
+
+.scenario-footer p {
+  font-size: 1.1rem;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.scenario-footer strong {
+  color: var(--color-teal);
+  font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+  .scenario-flow {
+    flex-direction: column;
+  }
+
+  .flow-arrow {
+    transform: rotate(90deg);
+    margin: var(--spacing-sm) 0;
+  }
+
+  .flow-content {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .scenario-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .scenario-flow {
+    gap: var(--spacing-sm);
+  }
+
+  .flow-content {
+    padding: var(--spacing-sm);
+    min-height: 120px;
+  }
+
+  .scenario-footer p {
+    font-size: 1rem;
+  }
+}
+
+/* =================================
+   VISION & FINAL CTA SECTION
+   ================================= */
+
+.vision-section {
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8F5F3 100%);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.vision-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.vision-image {
+  margin-bottom: var(--spacing-lg);
+  animation: float 3s ease-in-out infinite;
+}
+
+.vision-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.4;
+  margin-bottom: var(--spacing-md);
+}
+
+.highlight-gradient {
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-lime) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.1em;
+}
+
+.vision-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.value-card {
+  background: white;
+  border-radius: 20px;
+  padding: var(--spacing-xl);
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+  border-color: var(--color-teal);
+}
+
+.value-icon {
+  margin-bottom: var(--spacing-md);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.value-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 4px;
+}
+
+.value-en {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-teal);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value-card p:last-child {
+  font-size: 1rem;
+  color: var(--color-gray-dark);
+  line-height: 1.7;
+}
+
+.vision-footer {
+  text-align: center;
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, #F0F7E6 0%, #E8F5F3 100%);
+  border-radius: 28px;
+  border: 3px solid var(--color-lime);
+}
+
+.vision-footer h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: var(--spacing-sm);
+}
+
+.vision-tagline {
+  font-size: 1.2rem;
+  color: var(--color-gray-dark);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 500;
+}
+
+.btn-vision-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 24px 56px;
+  background: linear-gradient(135deg, var(--color-lime) 0%, #C5D11B 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow: 0 15px 50px rgba(212, 225, 87, 0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+.btn-vision-cta::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-vision-cta:hover::before {
+  width: 500px;
+  height: 500px;
+}
+
+.btn-vision-cta:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 20px 60px rgba(212, 225, 87, 0.6);
+}
+
+.badge-free-large {
+  padding: 6px 16px;
+  background: var(--color-teal);
+  color: white;
+  border-radius: 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.vision-note {
+  font-size: 0.95rem;
+  color: var(--color-gray-dark);
+  margin-top: var(--spacing-sm);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .vision-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .vision-values {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .vision-footer h3 {
+    font-size: 1.5rem;
+  }
+
+  .vision-tagline {
+    font-size: 1rem;
+  }
+
+  .btn-vision-cta {
+    padding: 20px 40px;
+    font-size: 1.2rem;
+    width: 100%;
+    max-width: 360px;
+    justify-content: center;
+  }
+}
+
+</style>
+    justify-content: center;
+  }
+}
+</style>
+
+<!-- Problem Statement Section -->
+<div class="problem-section">
+  <div class="problem-header">
+    <h2>옷은 넘쳐나는데, 정작 입을 옷이 없는<br><span class="highlight-text">'데이터의 부재'</span></h2>
+    <p class="problem-subtitle">옷장 정리는 단순한 청소가 아니라, 내 자산(Asset)에 대한 데이터 관리 문제입니다.</p>
+  </div>
+
+  <div class="problems-grid">
+    <!-- Problem 1 -->
+    <div class="problem-card">
+      <div class="problem-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="35" fill="#FFE8E8" opacity="0.5"/>
+          <path d="M30 25 L30 20 L38 15 L40 13 L42 15 L50 20 L50 25" stroke="#FF6B6B" stroke-width="2.5" fill="none"/>
+          <rect x="30" y="25" width="20" height="30" rx="2" fill="none" stroke="#FF6B6B" stroke-width="2.5"/>
+          <line x1="35" y1="30" x2="45" y2="30" stroke="#FF6B6B" stroke-width="2" opacity="0.5"/>
+          <line x1="35" y1="35" x2="45" y2="35" stroke="#FF6B6B" stroke-width="2" opacity="0.5"/>
+          <text x="40" y="70" text-anchor="middle" fill="#FF6B6B" font-size="40" font-weight="bold">?</text>
+        </svg>
+      </div>
+      <h3>관리의 부재<br><span class="en-subtitle">(Lack of Management)</span></h3>
+      <p>내 옷장에 무엇이 있는지 파악 불가능<br>→ 중복 구매 및 비효율적 소비 발생</p>
+    </div>
+
+    <!-- Problem 2 -->
+    <div class="problem-card">
+      <div class="problem-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="35" fill="#FFF4E6" opacity="0.5"/>
+          <circle cx="40" cy="40" r="25" fill="none" stroke="#FFB347" stroke-width="2.5"/>
+          <path d="M40 20 L40 40 L55 50" stroke="#FFB347" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="40" cy="40" r="3" fill="#FFB347"/>
+          <path d="M25 55 Q30 50 35 55 M45 55 Q50 50 55 55" stroke="#FFB347" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <h3>결정의 고통<br><span class="en-subtitle">(Decision Fatigue)</span></h3>
+      <p>매일 아침 '오늘 뭐 입지?'에 대한<br>스트레스와 시간 낭비</p>
+    </div>
+
+    <!-- Problem 3 -->
+    <div class="problem-card">
+      <div class="problem-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="35" fill="#E8F5E9" opacity="0.5"/>
+          <rect x="25" y="30" width="30" height="35" rx="3" fill="none" stroke="#66BB6A" stroke-width="2.5"/>
+          <path d="M25 35 L35 45 L55 25" stroke="#66BB6A" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+          <line x1="45" y1="50" x2="60" y2="50" stroke="#66BB6A" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M60 50 L55 45 M60 50 L55 55" stroke="#66BB6A" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>처분의 변거로움<br><span class="en-subtitle">(Disposal Friction)</span></h3>
+      <p>입지 않는 옷을 선별하고<br>기부/판매하는 과정의 복잡함</p>
+    </div>
+  </div>
+
+  <div class="solution-teaser">
+    <div class="solution-icon">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+        <path d="M30 10 L35 20 L45 22 L37 30 L39 40 L30 35 L21 40 L23 30 L15 22 L25 20 Z" fill="url(#grad-star)" stroke="#D4E157" stroke-width="2"/>
+        <defs>
+          <linearGradient id="grad-star" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#D4E157;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#8DD5CC;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <h3>FitMe가 3가지 문제를 한 번에 해결합니다</h3>
+    <p>Fashion Second Brain으로 옷장 관리부터 스타일링, 처분, 쇼핑까지 One-Stop 해결</p>
+  </div>
+</div>
+
+<!-- Fashion Second Brain Section -->
+<div class="fashion-second-brain" id="how-it-works">
+  <div class="section-header">
+    <h2>3가지 핵심 요소로 완성되는<br><span class="gradient-text">'Fashion Second Brain'</span></h2>
+    <p class="section-subtitle">옷장 관리부터 스타일링, 처분, 쇼핑까지 One-Stop 해결</p>
+  </div>
+
+  <!-- Venn Diagram Style Layout -->
+  <div class="core-elements-venn">
+    <div class="venn-circle venn-left">
+      <div class="venn-content">
+        <div class="venn-icon">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="40" fill="url(#grad-camera-bg)" opacity="0.2"/>
+            <path d="M30 40 L35 35 L45 35 L50 30 L55 35 L65 35 L70 40 L70 65 C70 67 68 69 66 69 L34 69 C32 69 30 67 30 65 Z" fill="url(#grad-camera)" stroke="#5BB9AE" stroke-width="2"/>
+            <circle cx="50" cy="52" r="12" fill="none" stroke="#5BB9AE" stroke-width="2.5"/>
+            <circle cx="50" cy="52" r="8" fill="#5BB9AE" opacity="0.3"/>
+            <defs>
+              <linearGradient id="grad-camera-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="grad-camera" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#E8F5F3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#C4E8E3;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3>Digital Closet</h3>
+        <p class="core-subtitle">사진 촬영 한 번으로<br>옷장 디지털화</p>
+      </div>
+    </div>
+
+    <div class="venn-circle venn-right">
+      <div class="venn-content">
+        <div class="venn-icon">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="40" fill="url(#grad-avatar-bg)" opacity="0.2"/>
+            <path d="M50 30 M50 25 C50 25 45 20 40 25 C35 30 35 40 40 45 C43 48 47 48 50 50 C53 48 57 48 60 45 C65 40 65 30 60 25 C55 20 50 25 50 25" fill="#F5D5B8"/>
+            <circle cx="50" cy="23" r="8" fill="#F5D5B8"/>
+            <path d="M35 50 L35 75 L40 90 L60 90 L65 75 L65 50" fill="url(#grad-body)" stroke="#D4A88C" stroke-width="1.5"/>
+            <line x1="35" y1="50" x2="20" y2="85" stroke="#D4A88C" stroke-width="4" stroke-linecap="round"/>
+            <line x1="65" y1="50" x2="80" y2="85" stroke="#D4A88C" stroke-width="4" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="grad-avatar-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#D4E157;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#B8CE32;stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="grad-body" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#E8F5F3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#F5E6D3;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3>3D Personal Avatar</h3>
+        <p class="core-subtitle">키/몸무게 기반 내 체형<br>구현 및 가상 피팅</p>
+      </div>
+    </div>
+
+    <div class="venn-circle venn-bottom">
+      <div class="venn-content">
+        <div class="venn-icon">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="40" fill="url(#grad-ai-bg)" opacity="0.2"/>
+            <circle cx="50" cy="45" r="20" fill="url(#grad-brain)" stroke="#1A3A52" stroke-width="2"/>
+            <circle cx="43" cy="43" r="3" fill="#1A3A52"/>
+            <circle cx="57" cy="43" r="3" fill="#1A3A52"/>
+            <path d="M45 52 Q50 55 55 52" stroke="#1A3A52" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M30 60 L35 70 L40 65 L45 75 L50 70 L55 75 L60 65 L65 70 L70 60" stroke="#5BB9AE" stroke-width="2" fill="none"/>
+            <circle cx="35" cy="35" r="2" fill="#D4E157"/>
+            <circle cx="65" cy="35" r="2" fill="#8DD5CC"/>
+            <circle cx="30" cy="50" r="2" fill="#5BB9AE"/>
+            <circle cx="70" cy="50" r="2" fill="#D4E157"/>
+            <defs>
+              <linearGradient id="grad-ai-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#5BB9AE;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#D4E157;stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="grad-brain" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#F0F0F0;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#E3E8EB;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h3>Clawdbot</h3>
+        <p class="core-subtitle">맥락(Context)을 이해하고<br>먼저 행동하는 AI Agent</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="core-elements-detail">
+  <div class="steps">
+    <!-- Step 1: 사진 촬영 -->
+    <div class="step step-photo">
+      <div class="step-illustration">
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 배경 원 -->
+          <circle cx="90" cy="90" r="85" fill="url(#grad-photo-bg)" opacity="0.1"/>
+
+          <!-- 휴대폰 -->
+          <g class="phone-device">
+            <rect x="50" y="30" width="80" height="120" rx="8" fill="url(#grad-phone)" stroke="#1A3A52" stroke-width="3"/>
+            <rect x="55" y="35" width="70" height="105" rx="4" fill="#E3E8EB"/>
+
+            <!-- 카메라 렌즈 -->
+            <circle cx="90" cy="75" r="20" fill="url(#grad-lens)"/>
+            <circle cx="90" cy="75" r="15" fill="#1A3A52" opacity="0.2"/>
+            <circle cx="90" cy="75" r="10" fill="#5BB9AE"/>
+            <circle cx="85" cy="70" r="3" fill="white" opacity="0.6"/>
+
+            <!-- 플래시 -->
+            <circle cx="110" cy="45" r="4" fill="#D4E157"/>
+
+            <!-- 사람 실루엣 -->
+            <circle cx="90" cy="110" r="8" fill="#8DD5CC" opacity="0.6"/>
+            <path d="M75 125 Q90 135 105 125" stroke="#8DD5CC" stroke-width="2" fill="none" opacity="0.6"/>
+          </g>
+
+          <!-- 스캔 라인 -->
+          <line x1="45" y1="90" x2="135" y2="90" stroke="#5BB9AE" stroke-width="2" stroke-dasharray="5,5" class="scan-line"/>
+
+          <!-- 정의: 그라데이션 -->
+          <defs>
+            <linearGradient id="grad-photo-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad-phone" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2E5266;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#1A3A52;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad-lens" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:0.4" />
+              <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:0.6" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="step-number">1</div>
+      <h3>사진 촬영<br><span class="step-subtitle">Zero-Friction 데이터 입력</span></h3>
+      <p>옷 사진만 찍으면 끝.<br>귀찮은 수기 입력 과정 최소화</p>
+    </div>
+
+    <!-- Step 2: 스마트 옷장 -->
+    <div class="step step-wardrobe">
+      <div class="step-illustration">
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 배경 원 -->
+          <circle cx="90" cy="90" r="85" fill="url(#grad-wardrobe-bg)" opacity="0.1"/>
+
+          <!-- 옷장 -->
+          <g class="wardrobe">
+            <rect x="40" y="40" width="100" height="100" rx="6" fill="url(#grad-closet)" stroke="#1A3A52" stroke-width="3"/>
+
+            <!-- 옷장 문 -->
+            <rect x="45" y="45" width="45" height="90" rx="4" fill="#F7F9FA" stroke="#5BB9AE" stroke-width="2"/>
+            <rect x="95" y="45" width="40" height="90" rx="4" fill="#F7F9FA" stroke="#5BB9AE" stroke-width="2"/>
+
+            <!-- 손잡이 -->
+            <circle cx="85" cy="90" r="3" fill="#5BB9AE"/>
+            <circle cx="100" cy="90" r="3" fill="#5BB9AE"/>
+
+            <!-- 옷 아이콘들 -->
+            <g class="clothes-items">
+              <!-- 셔츠 -->
+              <path d="M60 65 L55 72 L55 80 C55 82 57 84 60 84 C63 84 65 82 65 80 L65 72 Z" fill="#8DD5CC"/>
+              <line x1="55" y1="75" x2="65" y2="75" stroke="#5BB9AE" stroke-width="1"/>
+
+              <!-- 바지 -->
+              <path d="M52 95 L56 85 L60 85 L64 85 L68 95 L66 105 L64 105 L62 95 L58 95 L56 105 L54 105 Z" fill="#D4E157" opacity="0.8"/>
+
+              <!-- 태그 -->
+              <rect x="100" y="60" width="25" height="12" rx="2" fill="#5BB9AE" opacity="0.3"/>
+              <rect x="100" y="80" width="25" height="12" rx="2" fill="#D4E157" opacity="0.3"/>
+              <rect x="100" y="100" width="25" height="12" rx="2" fill="#8DD5CC" opacity="0.3"/>
+            </g>
+          </g>
+
+          <!-- 스파클 -->
+          <g class="sparkles">
+            <circle cx="30" cy="50" r="2" fill="#D4E157" class="sparkle"/>
+            <circle cx="150" cy="70" r="2" fill="#8DD5CC" class="sparkle"/>
+            <circle cx="140" cy="130" r="2" fill="#5BB9AE" class="sparkle"/>
+          </g>
+
+          <defs>
+            <linearGradient id="grad-wardrobe-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#D4E157;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8DD5CC;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad-closet" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#E3E8EB;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#F7F9FA;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="step-number">2</div>
+      <h3>AI Segmentation & Auto-Tagging<br><span class="step-subtitle">자동 누끼 및 분류</span></h3>
+      <p>촬영 즉시 배경 자동 제거 및 객체(Object) 추출<br>카테고리, 색상, 소재, 계절감 데이터를 자동으로 메타데이터화</p>
+    </div>
+
+    <!-- Step 3: AI 코디 -->
+    <div class="step step-ai">
+      <div class="step-illustration">
+        <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 배경 원 -->
+          <circle cx="90" cy="90" r="85" fill="url(#grad-ai-bg)" opacity="0.1"/>
+
+          <!-- AI 뇌 -->
+          <g class="ai-brain">
+            <circle cx="90" cy="70" r="35" fill="url(#grad-brain)" stroke="#1A3A52" stroke-width="3"/>
+
+            <!-- 뉴럴 네트워크 -->
+            <g class="neural-network">
+              <circle cx="70" cy="60" r="4" fill="#D4E157"/>
+              <circle cx="90" cy="55" r="4" fill="#8DD5CC"/>
+              <circle cx="110" cy="60" r="4" fill="#5BB9AE"/>
+              <circle cx="75" cy="75" r="4" fill="#5BB9AE"/>
+              <circle cx="105" cy="75" r="4" fill="#D4E157"/>
+
+              <line x1="70" y1="60" x2="75" y2="75" stroke="#8DD5CC" stroke-width="2" opacity="0.5"/>
+              <line x1="90" y1="55" x2="75" y2="75" stroke="#8DD5CC" stroke-width="2" opacity="0.5"/>
+              <line x1="110" y1="60" x2="105" y2="75" stroke="#8DD5CC" stroke-width="2" opacity="0.5"/>
+              <line x1="90" y1="55" x2="105" y2="75" stroke="#8DD5CC" stroke-width="2" opacity="0.5"/>
+            </g>
+
+            <!-- AI 눈 -->
+            <circle cx="80" cy="70" r="5" fill="#1A3A52"/>
+            <circle cx="100" cy="70" r="5" fill="#1A3A52"/>
+            <circle cx="82" cy="68" r="2" fill="white"/>
+            <circle cx="102" cy="68" r="2" fill="white"/>
+          </g>
+
+          <!-- 옷 추천 카드들 -->
+          <g class="outfit-cards">
+            <rect x="40" y="110" width="28" height="40" rx="4" fill="#8DD5CC" opacity="0.7" class="card-1"/>
+            <rect x="76" y="110" width="28" height="40" rx="4" fill="#D4E157" opacity="0.7" class="card-2"/>
+            <rect x="112" y="110" width="28" height="40" rx="4" fill="#5BB9AE" opacity="0.7" class="card-3"/>
+
+            <!-- 체크마크 -->
+            <path d="M50 125 L52 127 L58 121" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </g>
+
+          <!-- 매직 스파클 -->
+          <g class="magic-sparkles">
+            <path d="M25 90 L27 92 L29 90 L27 88 Z" fill="#D4E157" class="magic-star"/>
+            <path d="M155 95 L157 97 L159 95 L157 93 Z" fill="#8DD5CC" class="magic-star"/>
+            <path d="M150 50 L152 52 L154 50 L152 48 Z" fill="#5BB9AE" class="magic-star"/>
+          </g>
+
+          <defs>
+            <linearGradient id="grad-ai-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#5BB9AE;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#D4E157;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad-brain" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#E3E8EB;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8DD5CC;stop-opacity:0.3" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="step-number">3</div>
+      <h3>AI 코디 추천 + 가상 피팅<br><span class="step-subtitle">Clawdbot의 초개인화 스타일링</span></h3>
+      <p>날씨, 일정, 과거 스타일 데이터를 분석하여 최적의 코디를 제안<br>3D 아바타로 가상 피팅을 체험하고 내 체형에 딱 맞는 사이즈 확인</p>
+    </div>
+  </div>
+</div>
+
+<!-- Scenarios Section -->
+<div class="scenarios-section">
+  <div class="section-header">
+    <h2>실생활 시나리오로 보는<br><span class="gradient-text">FitMe의 똑똑한 활용법</span></h2>
+    <p class="section-subtitle">고민 없는 아침, 데이터에 기반한 최적의 스타일링 제안</p>
+  </div>
+
+  <div class="scenarios-container">
+    <!-- Scenario 1: TPO 스타일링 -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-number">Scenario 1</div>
+        <h3>비 오는 화요일, 중요한 미팅을 위한<br><span class="highlight-teal">TPO 스타일링</span></h3>
+        <p class="scenario-subtitle">고민 없는 아침, 데이터에 기반한 최적의 스타일링 제안</p>
+      </div>
+
+      <div class="scenario-flow">
+        <!-- Input -->
+        <div class="flow-step">
+          <div class="flow-label">Input<br><span class="sub">(Context)</span></div>
+          <div class="flow-content">
+            <div class="context-item">
+              <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                <rect x="10" y="10" width="30" height="30" rx="3" fill="#E8F5F3" stroke="#5BB9AE" stroke-width="2"/>
+                <text x="25" y="30" text-anchor="middle" fill="#1A3A52" font-size="16" font-weight="bold">14</text>
+                <text x="25" y="18" text-anchor="middle" fill="#5BB9AE" font-size="8">TUE</text>
+              </svg>
+              <p>화요일<br>오후 2시<br>임원 미팅</p>
+            </div>
+            <div class="context-item">
+              <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                <circle cx="25" cy="20" r="8" fill="#E8F5F3" stroke="#5BB9AE" stroke-width="2"/>
+                <path d="M15 32 L20 28 L25 32 L30 28 L35 32" stroke="#5BB9AE" stroke-width="2" fill="none"/>
+                <path d="M10 35 L15 40 L20 35 L25 40 L30 35 L35 40 L40 35" stroke="#5BB9AE" stroke-width="1.5" fill="none" opacity="0.5"/>
+              </svg>
+              <p>비 /고습도</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flow-arrow">→</div>
+
+        <!-- Processing -->
+        <div class="flow-step">
+          <div class="flow-label">Processing<br><span class="sub">(Clawdbot Logic)</span></div>
+          <div class="flow-content">
+            <div class="processing-box">
+              <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                <circle cx="30" cy="30" r="20" fill="url(#grad-cpu)" stroke="#5BB9AE" stroke-width="2"/>
+                <path d="M20 30 L25 25 L30 30 L35 25 L40 30" stroke="#5BB9AE" stroke-width="2" fill="none"/>
+                <circle cx="22" cy="22" r="2" fill="#D4E157"/>
+                <circle cx="38" cy="22" r="2" fill="#8DD5CC"/>
+                <circle cx="22" cy="38" r="2" fill="#5BB9AE"/>
+                <circle cx="38" cy="38" r="2" fill="#D4E157"/>
+                <defs>
+                  <linearGradient id="grad-cpu" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#F0F0F0;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#E8F5F3;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <p>비가 오니 린넨 소재는 피하고,<br>격식 있는 방수 트렌치코트를 추천</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flow-arrow">→</div>
+
+        <!-- Output -->
+        <div class="flow-step">
+          <div class="flow-label">Output<br><span class="sub">(Action)</span></div>
+          <div class="flow-content">
+            <div class="output-phone">
+              <svg width="100" height="150" viewBox="0 0 100 150" fill="none">
+                <rect x="10" y="10" width="80" height="130" rx="8" fill="#1A3A52" stroke="#5BB9AE" stroke-width="2"/>
+                <rect x="15" y="15" width="70" height="110" rx="4" fill="#E8F5F3"/>
+                <!-- Avatar with coat -->
+                <g transform="translate(50, 40)">
+                  <circle cx="0" cy="0" r="8" fill="#F5D5B8"/>
+                  <rect x="-12" y="8" width="24" height="35" rx="2" fill="#C8B8A0"/>
+                  <rect x="-10" y="10" width="20" height="15" rx="1" fill="#2C2C2C"/>
+                </g>
+                <text x="50" y="95" text-anchor="middle" fill="#1A3A52" font-size="6" font-weight="bold">Clawdbot Stylist</text>
+                <text x="50" y="102" text-anchor="middle" fill="#5BB9AE" font-size="5">비 오는 날의 미팅 특제:</text>
+                <text x="50" y="108" text-anchor="middle" fill="#5BB9AE" font-size="5">방수 트렌치코트</text>
+              </svg>
+              <p>사용자 3D 아바타에<br>트렌치코트 코디를<br>입혀 푸시 알림 전송</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 2: Eco-Cycle -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-number">Scenario 2</div>
+        <h3>자원 순환을 유도하는<br><span class="highlight-lime">Eco-Cycle 매니지먼트</span></h3>
+        <p class="scenario-subtitle">고민 없는 아침, 데이터에 기반한 최적의 스타일링 제안</p>
+      </div>
+
+      <div class="scenario-flow">
+        <!-- Analysis -->
+        <div class="flow-step">
+          <div class="flow-label">Analysis<br><span class="sub">(Detection)</span></div>
+          <div class="flow-content">
+            <div class="analysis-box">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                <path d="M25 25 L25 20 L35 15 L40 13 L45 15 L55 20 L55 25" stroke="#FFB347" stroke-width="2" fill="none"/>
+                <rect x="25" y="25" width="30" height="40" rx="2" fill="none" stroke="#FFB347" stroke-width="2"/>
+                <circle cx="40" cy="40" r="15" fill="none" stroke="#FFB347" stroke-width="2"/>
+                <text x="40" y="48" text-anchor="middle" fill="#FFB347" font-size="12" font-weight="bold">380</text>
+                <text x="40" y="56" text-anchor="middle" fill="#FFB347" font-size="6">Days</text>
+              </svg>
+              <p>계절이 바뀌는 시점,<br>최근 1년간 착용 기록이<br>없는 의류 감지</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flow-arrow">→</div>
+
+        <!-- Suggestion -->
+        <div class="flow-step">
+          <div class="flow-label">Suggestion<br><span class="sub">(Nudge)</span></div>
+          <div class="flow-content">
+            <div class="suggestion-bubble">
+              <svg width="120" height="80" viewBox="0 0 120 80" fill="none">
+                <rect x="10" y="10" width="100" height="60" rx="8" fill="#F0F7E6" stroke="#D4E157" stroke-width="2"/>
+                <circle cx="30" cy="30" r="8" fill="#C8B8A0"/>
+                <circle cx="30" cy="30" r="6" fill="#8B7355"/>
+                <text x="50" y="30" fill="#1A3A52" font-size="7" font-weight="bold">Clawdbot</text>
+                <text x="50" y="40" fill="#1A3A52" font-size="5">이 자켓은 380일간</text>
+                <text x="50" y="47" fill="#1A3A52" font-size="5">입지 않으셨네요.</text>
+                <text x="50" y="57" fill="#5BB9AE" font-size="6" font-weight="bold">기부하시겠어요?</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="flow-arrow">→</div>
+
+        <!-- Action -->
+        <div class="flow-step">
+          <div class="flow-label">Action<br><span class="sub">(Execution)</span></div>
+          <div class="flow-content">
+            <div class="action-box">
+              <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
+                <rect x="20" y="20" width="60" height="40" rx="4" fill="#E8F5F3"/>
+                <text x="50" y="35" text-anchor="middle" fill="#5BB9AE" font-size="6">아름다운가게</text>
+                <text x="50" y="42" text-anchor="middle" fill="#5BB9AE" font-size="6">굿윌스토어</text>
+                <rect x="30" y="50" width="40" height="15" rx="2" fill="#D4E157"/>
+                <text x="50" y="60" text-anchor="middle" fill="#1A3A52" font-size="6" font-weight="bold">수거 신청</text>
+              </svg>
+              <p>아름다운가게/굿윌스토어<br>API 연동으로<br>수거 신청 대행</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario-footer">
+    <p>사용자의 <strong>옷장 공간 확보</strong> 및 <strong>자원 순환(Sustainability)</strong> 실현</p>
+  </div>
+</div>
+
+<!-- Features Section -->
 <div class="features">
   <div class="feature">
-    <h3>📸 3D 아바타 생성</h3>
-    <p>전신 사진 1장 + 키/몸무게로 360도 3D 모델 생성</p>
+    <div class="feature-icon">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="25" stroke="currentColor" stroke-width="2"/>
+        <path d="M30 15 L30 30 L40 40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="30" cy="30" r="3" fill="currentColor"/>
+      </svg>
+    </div>
+    <h3>매일 아침 고민하시나요?</h3>
+    <p>FitMe의 AI 스타일리스트가 날씨, 일정, 과거 스타일 데이터를 분석해서 최적의 코디를 추천합니다</p>
   </div>
 
   <div class="feature">
-    <h3>👔 스마트 옷장</h3>
-    <p>AI 배경 제거 + 자동 태깅 (종류, 색상, 소재, 계절)</p>
+    <div class="feature-icon">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="15" width="40" height="35" rx="3" stroke="currentColor" stroke-width="2"/>
+        <line x1="10" y1="25" x2="50" y2="25" stroke="currentColor" stroke-width="2"/>
+        <circle cx="20" cy="35" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="30" cy="35" r="4" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="40" cy="35" r="4" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <h3>옷장이 넘치는데 입을 옷이 없으신가요?</h3>
+    <p>모든 옷을 디지털로 관리하고, 색상·소재·계절별로 자동 정리되어 활용도를 높입니다</p>
   </div>
 
   <div class="feature">
-    <h3>🌤️ AI 코디 추천</h3>
-    <p>날씨 기반 매일 3건 코디 제안</p>
+    <div class="feature-icon">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 10 L25 18 L25 35 C25 40 27.5 45 30 45 C32.5 45 35 40 35 35 L35 18 Z" stroke="currentColor" stroke-width="2"/>
+        <line x1="25" y1="22" x2="35" y2="22" stroke="currentColor" stroke-width="2"/>
+        <path d="M18 50 L22 35 L25 18 L35 18 L38 35 L42 50" stroke="currentColor" stroke-width="2"/>
+        <circle cx="30" cy="30" r="12" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+    <h3>온라인 쇼핑이 두려우신가요?</h3>
+    <p>3D 아바타로 가상 피팅을 체험하고, 내 체형에 정확히 맞는 사이즈를 미리 확인하세요</p>
+  </div>
+</div>
+
+<!-- Social Proof Section -->
+<div class="social-proof">
+  <h2>사용자들의 이야기</h2>
+  <div class="testimonials">
+    <div class="testimonial">
+      <p class="testimonial-text">"매일 아침 옷 고르는 시간이 10분에서 1분으로 줄었어요. 코디 추천이 정말 센스있어요!"</p>
+      <p class="testimonial-author">- 김지현 님</p>
+    </div>
+
+    <div class="testimonial">
+      <p class="testimonial-text">"온라인 쇼핑할 때 가상 피팅으로 미리 확인하니까 반품률이 확 줄었어요."</p>
+      <p class="testimonial-author">- 박민수 님</p>
+    </div>
+
+    <div class="testimonial">
+      <p class="testimonial-text">"옷장 속 잊혀진 옷들을 다시 활용하게 됐어요. 조합 추천이 신선해요!"</p>
+      <p class="testimonial-author">- 이서연 님</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="faq-section">
+  <h2>자주 묻는 질문</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <h3>무료로 사용할 수 있나요?</h3>
+      <p>네! 회원가입만 하시면 모든 기능을 무료로 사용하실 수 있습니다. 3D 아바타 생성, 옷장 관리, 코디 추천까지 전부 무료입니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>사진이 외부에 공유되나요?</h3>
+      <p>절대 그렇지 않습니다. 모든 사진과 데이터는 암호화되어 안전하게 저장되며, 사용자의 동의 없이는 절대 공유되지 않습니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>3D 아바타는 얼마나 정확한가요?</h3>
+      <p>AI 신체 분석 기술로 오차범위 ±2cm 이내의 정확도를 자랑합니다. 키와 몸무게 정보를 함께 입력하시면 더욱 정확해집니다.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>어떤 옷이든 가상 피팅이 가능한가요?</h3>
+      <p>현재는 상의, 하의, 아우터 등 주요 의류에 대해 가상 피팅을 지원하며, 지속적으로 카테고리를 확장하고 있습니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Vision & Final CTA Section -->
+<div class="vision-section">
+  <div class="vision-header">
+    <div class="vision-image">
+      <svg width="300" height="200" viewBox="0 0 300 200" fill="none">
+        <!-- Two hands reaching toward each other (like Creation of Adam) -->
+        <g class="hand-left">
+          <path d="M50 100 Q80 90 110 100" stroke="#D4A88C" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="50" cy="100" rx="20" ry="12" fill="#F5D5B8"/>
+        </g>
+        <g class="hand-right">
+          <path d="M250 100 Q220 90 190 100" stroke="#E8C4A0" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="250" cy="100" rx="20" ry="12" fill="#F5D5B8"/>
+        </g>
+        <!-- Tech elements between hands -->
+        <g class="tech-spark">
+          <circle cx="150" cy="100" r="8" fill="#D4E157"/>
+          <path d="M145 95 L148 98 L145 101 M155 95 L152 98 L155 101" stroke="#5BB9AE" stroke-width="2"/>
+          <circle cx="140" cy="90" r="3" fill="#8DD5CC" opacity="0.6"/>
+          <circle cx="160" cy="90" r="3" fill="#8DD5CC" opacity="0.6"/>
+          <circle cx="140" cy="110" r="3" fill="#5BB9AE" opacity="0.6"/>
+          <circle cx="160" cy="110" r="3" fill="#5BB9AE" opacity="0.6"/>
+        </g>
+        <!-- Decorative lines -->
+        <path d="M30 80 Q150 70 270 80" stroke="#D4E157" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="5,5"/>
+        <path d="M30 120 Q150 130 270 120" stroke="#8DD5CC" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="5,5"/>
+      </svg>
+    </div>
+    <h2>FitMe는 단순한 앱이 아닌,<br>당신의 <span class="highlight-gradient">'Fashion Second Brain'</span>입니다</h2>
+  </div>
+
+  <div class="vision-values">
+    <div class="value-card">
+      <div class="value-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect x="20" y="20" width="40" height="40" rx="4" fill="url(#grad-data)" opacity="0.3"/>
+          <path d="M30 50 L35 45 L40 50 L45 40 L50 45 L55 35 L60 40" stroke="url(#grad-data-line)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="35" cy="45" r="3" fill="#5BB9AE"/>
+          <circle cx="45" cy="40" r="3" fill="#8DD5CC"/>
+          <circle cx="55" cy="35" r="3" fill="#D4E157"/>
+          <defs>
+            <linearGradient id="grad-data" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#5BB9AE;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8DD5CC;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="grad-data-line" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#5BB9AE;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#D4E157;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h3>데이터로 입고</h3>
+      <p class="value-en">(Data-driven Styling)</p>
+      <p>감이 아닌 데이터로,<br>내 취향과 체형에 최적화된 스타일링</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="35" r="15" fill="url(#grad-ai-head)" stroke="#5BB9AE" stroke-width="2"/>
+          <circle cx="35" cy="33" r="3" fill="#1A3A52"/>
+          <circle cx="45" cy="33" r="3" fill="#1A3A52"/>
+          <path d="M35 40 Q40 43 45 40" stroke="#1A3A52" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M25 55 L30 65 L35 60 L40 70 L45 60 L50 65 L55 55" stroke="#5BB9AE" stroke-width="2.5" fill="none"/>
+          <circle cx="30" cy="28" r="2" fill="#D4E157" opacity="0.6"/>
+          <circle cx="50" cy="28" r="2" fill="#8DD5CC" opacity="0.6"/>
+          <defs>
+            <linearGradient id="grad-ai-head" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#F0F0F0;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#E8F5F3;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h3>AI로 관리하며</h3>
+      <p class="value-en">(AI Management)</p>
+      <p>Clawdbot이 맥락을 이해하고<br>먼저 행동하는 AI 비서</p>
+    </div>
+
+    <div class="value-card">
+      <div class="value-icon">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="25" fill="none" stroke="url(#grad-earth)" stroke-width="3"/>
+          <path d="M25 30 Q30 25 35 30 Q40 35 45 30 Q50 25 55 30" stroke="#66BB6A" stroke-width="2" fill="none"/>
+          <path d="M30 50 Q35 55 40 50 Q45 45 50 50" stroke="#66BB6A" stroke-width="2" fill="none"/>
+          <circle cx="32" cy="38" r="4" fill="#66BB6A" opacity="0.5"/>
+          <circle cx="48" cy="42" r="4" fill="#66BB6A" opacity="0.5"/>
+          <path d="M35 20 L37 15 L35 10" stroke="#D4E157" stroke-width="2" stroke-linecap="round"/>
+          <path d="M45 20 L47 15 L45 10" stroke="#D4E157" stroke-width="2" stroke-linecap="round"/>
+          <path d="M55 35 L60 33 L65 35" stroke="#8DD5CC" stroke-width="2" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="grad-earth" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#66BB6A;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#8DD5CC;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h3>환경까지 생각하는</h3>
+      <p class="value-en">(Sustainable)</p>
+      <p>자원 순환을 유도하며<br>지속 가능한 패션 라이프스타일</p>
+    </div>
+  </div>
+
+  <div class="vision-footer">
+    <h3>새로운 라이프스타일의 시작</h3>
+    <p class="vision-tagline">옷장은 가볍게, 스타일은 완벽하게, 지구는 건강하게</p>
+    <% unless user_signed_in? %>
+      <%= link_to new_user_registration_path, class: "btn-vision-cta" do %>
+        <span>지금 바로 시작하기</span>
+        <span class="badge-free-large">Free Forever</span>
+      <% end %>
+    <% else %>
+      <%= link_to dashboard_path, class: "btn-vision-cta" do %>
+        <span>내 대시보드로 이동</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M9 5l7 7-7 7"/>
+        </svg>
+      <% end %>
+    <% end %>
+    <p class="vision-note">1분이면 가입 완료! 신용카드 불필요</p>
   </div>
 </div>

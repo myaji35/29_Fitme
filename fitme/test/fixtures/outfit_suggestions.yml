@@ -1,4 +1,11 @@
 # Test fixtures for OutfitSuggestion model
+one:
+  user: one
+  suggested_for_date: <%= Date.today %>
+  weather_snapshot: '{"temp": 20, "description": "맑음"}'
+  item_ids: '[1, 2]'
+  selected: false
+
 user_suggestion:
   user: regular_user
   suggested_for_date: <%= Date.today %>

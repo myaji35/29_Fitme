@@ -1,5 +1,7 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
+  # Development: Skip authentication for demo purposes
+  # before_action :authenticate_user!
+  before_action :ensure_demo_user
   before_action :set_profile
 
   def show
@@ -24,11 +26,31 @@ class ProfilesController < ApplicationController
 
   private
 
+  def ensure_demo_user
+    unless user_signed_in?
+      demo_user = User.find_or_create_by!(email: 'demo@fitme.com') do |user|
+        user.password = 'password123'
+        user.password_confirmation = 'password123'
+      end
+      sign_in(demo_user)
+    end
+  end
+
   def set_profile
     @profile = current_user.profile || current_user.create_profile
+
+    # Add mock data for demo if profile is empty
+    if @profile.height_cm.nil? && @profile.weight_kg.nil?
+      @profile.update(
+        height_cm: 175,
+        weight_kg: 70,
+        gender: 'male',
+        birth_date: Date.new(1990, 5, 15)
+      )
+    end
   end
 
   def profile_params
-    params.require(:profile).permit(:height_cm, :weight_kg, :avatar_3d_file)
+    params.require(:profile).permit(:height_cm, :weight_kg, :gender, :birth_date, :avatar_3d_file)
   end
 end

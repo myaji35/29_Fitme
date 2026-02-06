@@ -2,12 +2,14 @@ require "test_helper"
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
-    get home_index_url
+    get root_url
     assert_response :success
   end
 
   test "should get dashboard" do
-    get home_dashboard_url
+    @user = users(:one)
+    sign_in @user
+    get dashboard_url
     assert_response :success
   end
 end

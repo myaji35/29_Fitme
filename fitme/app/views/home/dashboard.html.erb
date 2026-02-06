@@ -1,49 +1,229 @@
-<div class="dashboard">
-  <h1>대시보드</h1>
-
-  <div class="weather-widget">
-    <h2>오늘의 날씨</h2>
-    <p>
-      🌡️ <%= @weather[:temp] %>°C (체감 <%= @weather[:feels_like] %>°C)<br>
-      <%= @weather[:description] %>
-    </p>
-    <%= link_to "오늘의 코디 추천 받기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+<div class="dashboard-modern">
+  <!-- Welcome Header -->
+  <div class="dashboard-header">
+    <div class="welcome-section">
+      <h1>안녕하세요, <%= current_user.email.split('@').first %>님! 👋</h1>
+      <p class="welcome-subtitle">오늘도 멋진 하루 되세요</p>
+    </div>
+    <div class="quick-actions">
+      <%= link_to new_item_path, class: "quick-action-btn" do %>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        <span>아이템 추가</span>
+      <% end %>
+      <%= link_to generate_outfit_suggestions_path, method: :post, class: "quick-action-btn primary" do %>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        <span>코디 추천</span>
+      <% end %>
+    </div>
   </div>
 
-  <div class="recent-items">
-    <h2>최근 추가한 아이템</h2>
-    <% if @items.any? %>
-      <div class="items-grid">
-        <% @items.each do |item| %>
-          <div class="item-card">
-            <% if item.image.attached? %>
-              <%= image_tag item.image, alt: item.category %>
-            <% else %>
-              <div class="placeholder">No Image</div>
-            <% end %>
-            <p><%= item.category %> - <%= item.color %></p>
-          </div>
-        <% end %>
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #8DD5CC 0%, #5BB9AE 100%);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Hook -->
+          <path d="M16 3 Q16 2 17 2 Q18 2 18 3 Q18 4 17 5 L16 8"/>
+          <!-- Shoulders -->
+          <path d="M16 8 L6 14 L6 24"/>
+          <path d="M16 8 L26 14 L26 24"/>
+          <!-- Bottom bar -->
+          <line x1="6" y1="24" x2="26" y2="24"/>
+        </svg>
       </div>
-      <%= link_to "전체 옷장 보기", items_path, class: "btn btn-secondary" %>
-    <% else %>
-      <p>아직 추가한 아이템이 없습니다.</p>
-      <%= link_to "아이템 추가하기", new_item_path, class: "btn btn-primary" %>
-    <% end %>
+      <div class="stat-content">
+        <p class="stat-label">전체 아이템</p>
+        <h3 class="stat-value"><%= @items.count %></h3>
+        <p class="stat-change">
+          <% if @items.count > 0 %>
+            <span class="positive">활성</span>
+          <% else %>
+            <span>아이템 추가 필요</span>
+          <% end %>
+        </p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #D4E157 0%, #8DD5CC 100%);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2">
+          <rect x="6" y="8" width="20" height="16" rx="2"/>
+          <path d="M10 14 L14 14 L14 20 L10 20 Z"/>
+          <path d="M17 11 L21 11 L21 20 L17 20 Z"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">코디 추천</p>
+        <h3 class="stat-value"><%= @recent_suggestions.count %></h3>
+        <p class="stat-change">
+          <span>지난 7일</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(135deg, #5BB9AE 0%, #D4E157 100%);">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2">
+          <circle cx="16" cy="16" r="10"/>
+          <path d="M16 10 L16 16 L20 20"/>
+        </svg>
+      </div>
+      <div class="stat-content">
+        <p class="stat-label">활동 기록</p>
+        <h3 class="stat-value">활성</h3>
+        <p class="stat-change">
+          <span>최근 접속</span>
+        </p>
+      </div>
+    </div>
   </div>
 
-  <div class="recent-suggestions">
-    <h2>최근 코디 추천</h2>
-    <% if @recent_suggestions.any? %>
-      <ul>
-        <% @recent_suggestions.each do |suggestion| %>
-          <li>
-            <%= link_to "#{suggestion.suggested_for_date} 코디", outfit_suggestion_path(suggestion) %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>아직 코디 추천이 없습니다.</p>
-    <% end %>
+  <!-- Main Content Grid -->
+  <div class="dashboard-content">
+    <!-- Weather Widget -->
+    <div class="weather-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          오늘의 날씨
+        </h2>
+      </div>
+      <div class="weather-content">
+        <div class="weather-main">
+          <div class="weather-temp"><%= @weather[:temp] %><span>°C</span></div>
+          <div class="weather-desc"><%= @weather[:description] %></div>
+        </div>
+        <div class="weather-details">
+          <div class="weather-detail-item">
+            <span class="detail-label">체감 온도</span>
+            <span class="detail-value"><%= @weather[:feels_like] %>°C</span>
+          </div>
+        </div>
+      </div>
+      <%= link_to "오늘의 코디 추천 받기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary btn-block" %>
+    </div>
+
+    <!-- Recent Items -->
+    <div class="recent-items-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M9 3v18M3 9h18M3 15h18M15 3v18"/>
+          </svg>
+          최근 추가한 아이템
+        </h2>
+        <%= link_to "전체 보기 →", items_path, class: "view-all-link" %>
+      </div>
+      <% if @items.any? %>
+        <div class="items-carousel">
+          <% @items.take(6).each do |item| %>
+            <div class="item-card-mini">
+              <%= link_to item_path(item), class: "item-link" do %>
+                <% if item.image.attached? %>
+                  <%= image_tag item.image, alt: item.category, class: "item-image-mini" %>
+                <% else %>
+                  <div class="placeholder-mini">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <!-- Hook -->
+                      <path d="M20 4 Q20 3 21 3 Q22 3 22 4 Q22 5 21 6 L20 10"/>
+                      <!-- Shoulders -->
+                      <path d="M20 10 L8 18 L8 30"/>
+                      <path d="M20 10 L32 18 L32 30"/>
+                      <!-- Bottom bar -->
+                      <line x1="8" y1="30" x2="32" y2="30"/>
+                    </svg>
+                  </div>
+                <% end %>
+                <div class="item-meta-mini">
+                  <span class="item-category"><%= item.category %></span>
+                  <span class="item-color" style="background-color: <%= item.color %>; width: 12px; height: 12px; border-radius: 50%; display: inline-block;"></span>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state-compact">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3">
+            <rect x="15" y="20" width="50" height="45" rx="4"/>
+            <line x1="40" y1="35" x2="40" y2="50"/>
+            <line x1="32" y1="42" x2="48" y2="42"/>
+          </svg>
+          <p>아직 추가한 아이템이 없습니다</p>
+          <%= link_to "첫 아이템 추가하기", new_item_path, class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Recent Suggestions -->
+    <div class="suggestions-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+          최근 코디 추천
+        </h2>
+        <%= link_to "전체 보기 →", outfit_suggestions_path, class: "view-all-link" %>
+      </div>
+      <% if @recent_suggestions.any? %>
+        <div class="suggestions-list">
+          <% @recent_suggestions.take(5).each do |suggestion| %>
+            <div class="suggestion-item">
+              <%= link_to outfit_suggestion_path(suggestion), class: "suggestion-link" do %>
+                <div class="suggestion-date">
+                  <div class="date-icon">
+                    <%= suggestion.suggested_for_date.day %>
+                  </div>
+                  <div class="date-info">
+                    <span class="month"><%= suggestion.suggested_for_date.strftime('%b') %></span>
+                    <span class="year"><%= suggestion.suggested_for_date.year %></span>
+                  </div>
+                </div>
+                <div class="suggestion-info">
+                  <h4><%= suggestion.suggested_for_date %> 코디</h4>
+                  <p class="suggestion-meta">
+                    <% if suggestion.weather_snapshot.present? %>
+                      <%= JSON.parse(suggestion.weather_snapshot)['description'] rescue '날씨 정보' %>
+                    <% else %>
+                      코디 추천
+                    <% end %>
+                  </p>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M7 4l6 6-6 6"/>
+                </svg>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state-compact">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3">
+            <circle cx="40" cy="35" r="15"/>
+            <path d="M40 50 Q30 60 25 65 M40 50 Q50 60 55 65"/>
+          </svg>
+          <p>아직 코디 추천이 없습니다</p>
+          <%= link_to "첫 추천 받기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

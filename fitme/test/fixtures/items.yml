@@ -1,4 +1,11 @@
 # Test fixtures for Item model
+one:
+  user: one
+  category: "top"
+  color: "#FF6B6B"
+  season: "spring"
+  meta_data: '{"brand": "TestBrand", "size": "M"}'
+
 user_shirt:
   user: regular_user
   category: "shirt"

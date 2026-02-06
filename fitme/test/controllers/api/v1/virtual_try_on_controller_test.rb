@@ -13,7 +13,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
   test "should reject request without API key" do
     post api_v1_virtual_try_on_url, params: {
       avatar_id: @public_profile.secure_id,
-      clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+      clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
     }
 
     assert_response :unauthorized
@@ -26,7 +26,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer invalid_key" },
       params: {
         avatar_id: @public_profile.secure_id,
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     assert_response :unauthorized
@@ -39,7 +39,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer #{@suspended_partner.api_key}" },
       params: {
         avatar_id: @public_profile.secure_id,
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     assert_response :forbidden
@@ -52,7 +52,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
     post api_v1_virtual_try_on_url,
       headers: { "Authorization" => "Bearer #{@active_partner.api_key}" },
       params: {
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     assert_response :bad_request
@@ -78,7 +78,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer #{@active_partner.api_key}" },
       params: {
         avatar_id: @private_profile.secure_id,
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     assert_response :forbidden
@@ -91,7 +91,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer #{@active_partner.api_key}" },
       params: {
         avatar_id: "nonexistent_id_1234567890",
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     assert_response :not_found
@@ -107,7 +107,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer #{@active_partner.api_key}" },
       params: {
         avatar_id: @public_profile.secure_id,
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     # If AI service is running, expect success
@@ -127,7 +127,7 @@ class Api::V1::VirtualTryOnControllerTest < ActionDispatch::IntegrationTest
       headers: { "Authorization" => "Bearer #{@active_partner.api_key}" },
       params: {
         avatar_id: @public_profile.secure_id,
-        clothing_image: fixture_file_upload('files/test_shirt.png', 'image/png')
+        clothing_image: fixture_file_upload('test_shirt.png', 'image/png')
       }
 
     @active_partner.reload

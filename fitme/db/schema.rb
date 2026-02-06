@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_31_220015) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_31_230207) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -93,7 +93,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_31_220015) do
 
   create_table "profiles", force: :cascade do |t|
     t.string "avatar_3d_file_path"
+    t.date "birth_date"
     t.datetime "created_at", null: false
+    t.string "gender"
     t.float "height_cm"
     t.boolean "is_public_api", default: true
     t.json "measurements"

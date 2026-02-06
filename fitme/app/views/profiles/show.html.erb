@@ -1,19 +1,545 @@
-<div class="profile-page">
-  <h1>내 프로필</h1>
+<div class="profile-page-modern">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="16" cy="10" r="5"/>
+          <path d="M6 28 C6 21 10 18 16 18 C22 18 26 21 26 28"/>
+        </svg>
+        <div>
+          <h1>내 프로필</h1>
+          <p class="subtitle"><%= current_user.email %></p>
+        </div>
+      </div>
+      <%= link_to edit_profile_path, class: "btn-edit-profile" do %>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2 L18 6 L7 17 L3 18 L4 14 Z"/>
+        </svg>
+        <span>프로필 수정</span>
+      <% end %>
+    </div>
+  </div>
 
-  <dl>
-    <dt>이메일:</dt>
-    <dd><%= current_user.email %></dd>
+  <div class="profile-content-grid">
+    <!-- Basic Info Card -->
+    <div class="profile-card basic-info-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2 L12 6 M12 18 L12 22 M4.93 4.93 L7.76 7.76 M16.24 16.24 L19.07 19.07 M2 12 L6 12 M18 12 L22 12 M4.93 19.07 L7.76 16.24 M16.24 7.76 L19.07 4.93"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          기본 정보
+        </h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon" style="background: linear-gradient(135deg, #8DD5CC 0%, #5BB9AE 100%);">
+            <% if @profile.gender == 'male' %>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="10" cy="14" r="6"/>
+                <line x1="16" y1="8" x2="22" y2="2"/>
+                <line x1="18" y1="2" x2="22" y2="2"/>
+                <line x1="22" y1="2" x2="22" y2="6"/>
+              </svg>
+            <% elsif @profile.gender == 'female' %>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="9" r="6"/>
+                <line x1="12" y1="15" x2="12" y2="22"/>
+                <line x1="8" y1="19" x2="16" y2="19"/>
+              </svg>
+            <% else %>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="8"/>
+              </svg>
+            <% end %>
+          </div>
+          <div class="info-content">
+            <span class="info-label">성별</span>
+            <span class="info-value">
+              <%= case @profile.gender
+                  when 'male' then '남성'
+                  when 'female' then '여성'
+                  when 'other' then '기타'
+                  else '미입력'
+                  end %>
+            </span>
+          </div>
+        </div>
 
-    <dt>키:</dt>
-    <dd><%= @profile.height_cm ? "#{@profile.height_cm} cm" : "미입력" %></dd>
+        <div class="info-item">
+          <div class="info-icon" style="background: linear-gradient(135deg, #D4E157 0%, #8DD5CC 100%);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">생년월일</span>
+            <span class="info-value">
+              <%= @profile.birth_date ? @profile.birth_date.strftime('%Y년 %m월 %d일') : '미입력' %>
+            </span>
+          </div>
+        </div>
 
-    <dt>몸무게:</dt>
-    <dd><%= @profile.weight_kg ? "#{@profile.weight_kg} kg" : "미입력" %></dd>
+        <div class="info-item">
+          <div class="info-icon" style="background: linear-gradient(135deg, #5BB9AE 0%, #D4E157 100%);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6 L12 12 L16 16"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">나이</span>
+            <span class="info-value">
+              <%= @profile.age ? "#{@profile.age}세" : '미입력' %>
+            </span>
+          </div>
+        </div>
 
-    </dl>
+        <div class="info-item">
+          <div class="info-icon" style="background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <line x1="12" y1="2" x2="12" y2="22"/>
+              <path d="M6 8 L6 16"/>
+              <path d="M18 8 L18 16"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">키</span>
+            <span class="info-value">
+              <%= @profile.height_cm ? "#{@profile.height_cm} cm" : '미입력' %>
+            </span>
+          </div>
+        </div>
 
-  <%= render "avatar_viewer" %>
+        <div class="info-item">
+          <div class="info-icon" style="background: linear-gradient(135deg, #4ECDC4 0%, #95E1D3 100%);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 2 C10 2 8 3 8 5 L8 8 C6 8 4 10 4 12 L4 18 C4 20 6 22 8 22 L16 22 C18 22 20 20 20 18 L20 12 C20 10 18 8 16 8 L16 5 C16 3 14 2 12 2 Z"/>
+              <circle cx="12" cy="15" r="2"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">체중</span>
+            <span class="info-value">
+              <%= @profile.weight_kg ? "#{@profile.weight_kg} kg" : '미입력' %>
+            </span>
+          </div>
+        </div>
 
-  <%= link_to "프로필 수정", edit_profile_path, class: "btn btn-primary" %>
+        <% if @profile.age && @profile.height_cm && @profile.weight_kg %>
+          <div class="info-item">
+            <div class="info-icon" style="background: linear-gradient(135deg, #EE6C4D 0%, #E0FBFC 100%);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M12 2 L2 7 L12 12 L22 7 L12 2"/>
+                <path d="M2 17 L12 22 L22 17"/>
+                <path d="M2 12 L12 17 L22 12"/>
+              </svg>
+            </div>
+            <div class="info-content">
+              <span class="info-label">BMI</span>
+              <span class="info-value">
+                <% bmi = (@profile.weight_kg / ((@profile.height_cm / 100.0) ** 2)).round(1) %>
+                <%= bmi %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Avatar 3D Card -->
+    <div class="profile-card avatar-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M6 21 C6 17 8 14 12 14 C16 14 18 17 18 21"/>
+          </svg>
+          3D 아바타
+        </h2>
+      </div>
+      <div class="avatar-preview">
+        <% if @profile.avatar_3d_file.attached? %>
+          <div class="avatar-3d-viewer">
+            <%= image_tag @profile.avatar_3d_file, alt: "Avatar", class: "avatar-image" %>
+            <p class="avatar-status">3D 모델 생성 완료</p>
+          </div>
+        <% else %>
+          <div class="avatar-placeholder">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+              <defs>
+                <linearGradient id="avatar-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:0.3" />
+                  <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:0.3" />
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="35" r="20" fill="url(#avatar-grad)" stroke="currentColor" stroke-width="3"/>
+              <path d="M25 90 C25 70 40 60 60 60 C80 60 95 70 95 90" fill="url(#avatar-grad)" stroke="currentColor" stroke-width="3"/>
+            </svg>
+            <h3>아바타 없음</h3>
+            <p>전신 사진을 업로드하면<br/>AI가 3D 아바타를 생성합니다</p>
+            <%= link_to "사진 업로드", edit_profile_path, class: "btn-upload" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Body Measurements Card -->
+    <div class="profile-card measurements-card">
+      <div class="card-header">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2 L12 22"/>
+            <path d="M2 12 L22 12"/>
+            <circle cx="12" cy="12" r="8"/>
+          </svg>
+          신체 치수
+        </h2>
+      </div>
+      <% if @profile.measurements.present? %>
+        <div class="measurements-grid">
+          <div class="measurement-item">
+            <span class="measurement-label">가슴둘레</span>
+            <span class="measurement-value"><%= @profile.measurements["chest"] %> cm</span>
+          </div>
+          <div class="measurement-item">
+            <span class="measurement-label">허리둘레</span>
+            <span class="measurement-value"><%= @profile.measurements["waist"] %> cm</span>
+          </div>
+          <div class="measurement-item">
+            <span class="measurement-label">엉덩이둘레</span>
+            <span class="measurement-value"><%= @profile.measurements["hips"] %> cm</span>
+          </div>
+          <div class="measurement-item">
+            <span class="measurement-label">다리 안쪽 길이</span>
+            <span class="measurement-value"><%= @profile.measurements["inseam"] %> cm</span>
+          </div>
+          <div class="measurement-item">
+            <span class="measurement-label">어깨너비</span>
+            <span class="measurement-value"><%= @profile.measurements["shoulder"] %> cm</span>
+          </div>
+          <div class="measurement-item">
+            <span class="measurement-label">팔길이</span>
+            <span class="measurement-value"><%= @profile.measurements["arm_length"] %> cm</span>
+          </div>
+        </div>
+      <% else %>
+        <div class="no-measurements">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" opacity="0.3">
+            <line x1="50" y1="10" x2="50" y2="90"/>
+            <line x1="10" y1="50" x2="90" y2="50"/>
+            <circle cx="50" cy="50" r="30"/>
+          </svg>
+          <p>신체 치수가 측정되지 않았습니다</p>
+          <p class="sub-text">3D 아바타 생성 시 자동으로 측정됩니다</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+<style>
+.profile-page-modern {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title svg {
+  color: var(--color-teal);
+}
+
+.header-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+.btn-edit-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-teal) 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.btn-edit-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.profile-content-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.profile-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.basic-info-card {
+  grid-column: span 8;
+}
+
+.avatar-card {
+  grid-column: span 4;
+}
+
+.measurements-card {
+  grid-column: span 12;
+}
+
+.card-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-bg-light);
+}
+
+.card-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.card-header svg {
+  color: var(--color-teal);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-bg-light);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.info-item:hover {
+  background: linear-gradient(135deg, rgba(141, 213, 204, 0.1) 0%, rgba(91, 185, 174, 0.1) 100%);
+}
+
+.info-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.avatar-preview {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-placeholder {
+  text-align: center;
+  padding: 2rem;
+}
+
+.avatar-placeholder svg {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.avatar-placeholder h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 0.5rem 0;
+}
+
+.avatar-placeholder p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.btn-upload {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-teal);
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-upload:hover {
+  background: var(--color-teal-dark);
+  transform: translateY(-2px);
+}
+
+.avatar-3d-viewer {
+  text-align: center;
+}
+
+.avatar-image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1rem;
+}
+
+.avatar-status {
+  font-size: 0.9rem;
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.measurements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.measurement-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--color-bg-light);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-teal);
+}
+
+.measurement-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.measurement-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-teal);
+}
+
+.no-measurements {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.no-measurements svg {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.no-measurements p {
+  font-size: 1.1rem;
+  color: var(--color-navy);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.no-measurements .sub-text {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+@media (max-width: 1024px) {
+  .basic-info-card,
+  .avatar-card {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-page-modern {
+    padding: 1rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .info-grid,
+  .measurements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

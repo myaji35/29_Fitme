@@ -1,5 +1,7 @@
 class OutfitSuggestionsController < ApplicationController
-  before_action :authenticate_user!
+  # Development: Skip authentication for demo purposes
+  # before_action :authenticate_user!
+  before_action :ensure_demo_user
 
   def index
     @suggestions = current_user.outfit_suggestions.order(suggested_for_date: :desc).limit(10)
@@ -28,6 +30,18 @@ class OutfitSuggestionsController < ApplicationController
       redirect_to outfit_suggestions_path, notice: "오늘의 코디 #{outfits.count}개가 생성되었습니다!"
     else
       redirect_to items_path, alert: "옷장에 아이템을 먼저 추가해주세요!"
+    end
+  end
+
+  private
+
+  def ensure_demo_user
+    unless user_signed_in?
+      demo_user = User.find_or_create_by!(email: 'demo@fitme.com') do |user|
+        user.password = 'password123'
+        user.password_confirmation = 'password123'
+      end
+      sign_in(demo_user)
     end
   end
 end

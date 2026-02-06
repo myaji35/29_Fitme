@@ -1,4 +1,9 @@
 # Test fixtures for User model
+one:
+  email: test@fitme.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>
+  role: 0  # user
+
 admin:
   email: admin@fitme.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password123') %>

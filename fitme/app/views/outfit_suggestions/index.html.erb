@@ -1,23 +1,404 @@
-<div class="suggestions-page">
-  <h1>코디 추천</h1>
-
-  <%= link_to "새 코디 생성", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+<div class="suggestions-page-modern">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-title">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 2l3.09 6.26L26 9.27l-5 4.87 1.18 6.88L16 17.77l-6.18 3.25L11 14.14 6 9.27l6.91-1.01L16 2z"/>
+        </svg>
+        <div>
+          <h1>AI 코디 추천</h1>
+          <p class="subtitle">날씨 기반 스마트 코디네이션</p>
+        </div>
+      </div>
+      <%= link_to generate_outfit_suggestions_path, method: :post, class: "btn-generate" do %>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 2 L10 6 M10 14 L10 18 M3.93 3.93 L6.76 6.76 M13.24 13.24 L16.07 16.07 M2 10 L6 10 M14 10 L18 10 M3.93 16.07 L6.76 13.24 M13.24 6.76 L16.07 3.93"/>
+          <circle cx="10" cy="10" r="3"/>
+        </svg>
+        <span>새 코디 생성</span>
+      <% end %>
+    </div>
+  </div>
 
   <% if @suggestions.any? %>
-    <div class="suggestions-list">
+    <div class="suggestions-grid">
       <% @suggestions.each do |suggestion| %>
-        <div class="suggestion-card">
-          <h3><%= suggestion.suggested_for_date %></h3>
-          <p>날씨: <%= suggestion.weather_snapshot["temp"] %>°C - <%= suggestion.weather_snapshot["description"] %></p>
-          <p>아이템 수: <%= suggestion.item_ids.count %>개</p>
-          <%= link_to "상세 보기", outfit_suggestion_path(suggestion), class: "btn btn-secondary" %>
+        <div class="suggestion-card-modern">
+          <%= link_to outfit_suggestion_path(suggestion), class: "suggestion-link-modern" do %>
+            <!-- Card Header -->
+            <div class="suggestion-header">
+              <div class="suggestion-date-badge">
+                <div class="date-number"><%= suggestion.suggested_for_date.day %></div>
+                <div class="date-month">
+                  <%= suggestion.suggested_for_date.strftime('%b') %>
+                  <span class="date-year"><%= suggestion.suggested_for_date.year %></span>
+                </div>
+              </div>
+              <% if suggestion.weather_snapshot.present? %>
+                <% weather = JSON.parse(suggestion.weather_snapshot) rescue {} %>
+                <div class="weather-info">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="16" cy="16" r="6"/>
+                    <line x1="16" y1="2" x2="16" y2="4"/>
+                    <line x1="16" y1="28" x2="16" y2="30"/>
+                    <line x1="6.34" y1="6.34" x2="7.76" y2="7.76"/>
+                    <line x1="24.24" y1="24.24" x2="25.66" y2="25.66"/>
+                    <line x1="2" y1="16" x2="4" y2="16"/>
+                    <line x1="28" y1="16" x2="30" y2="16"/>
+                    <line x1="6.34" y1="25.66" x2="7.76" y2="24.24"/>
+                    <line x1="24.24" y1="7.76" x2="25.66" y2="6.34"/>
+                  </svg>
+                  <div class="weather-details">
+                    <span class="temp"><%= weather['temp'] %>°C</span>
+                    <span class="desc"><%= weather['description'] %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <!-- Card Content -->
+            <div class="suggestion-content">
+              <h3>
+                <%= suggestion.suggested_for_date.strftime('%Y년 %m월 %d일') %> 코디
+              </h3>
+              <div class="items-preview">
+                <% if suggestion.item_ids.present? && suggestion.item_ids.is_a?(Array) %>
+                  <div class="items-count">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <!-- Hook -->
+                      <path d="M10 2 Q10 1.5 10.5 1.5 Q11 1.5 11 2 Q11 2.5 10.5 3 L10 5"/>
+                      <!-- Shoulders -->
+                      <path d="M10 5 L4 9 L4 15"/>
+                      <path d="M10 5 L16 9 L16 15"/>
+                      <!-- Bottom bar -->
+                      <line x1="4" y1="15" x2="16" y2="15"/>
+                    </svg>
+                    <%= suggestion.item_ids.count %>개 아이템
+                  </div>
+                <% else %>
+                  <div class="items-count">
+                    <span class="no-items">아이템 정보 없음</span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Card Footer -->
+            <div class="suggestion-footer">
+              <span class="view-details">
+                상세 보기
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M6 4 L10 8 L6 12"/>
+                </svg>
+              </span>
+            </div>
+          <% end %>
         </div>
       <% end %>
     </div>
   <% else %>
-    <div class="empty-state">
-      <p>아직 코디 추천이 없습니다.</p>
-      <%= link_to "첫 코디 생성하기", generate_outfit_suggestions_path, method: :post, class: "btn btn-primary" %>
+    <div class="empty-state-large">
+      <svg width="200" height="200" viewBox="0 0 200 200" fill="none">
+        <defs>
+          <linearGradient id="empty-outfit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8DD5CC;stop-opacity:0.3" />
+            <stop offset="100%" style="stop-color:#5BB9AE;stop-opacity:0.3" />
+          </linearGradient>
+        </defs>
+        <!-- AI Brain illustration -->
+        <circle cx="100" cy="80" r="50" fill="url(#empty-outfit-grad)" stroke="currentColor" stroke-width="3"/>
+        <path d="M70 80 Q75 70 80 65 Q85 60 90 62 Q95 64 95 70" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+        <path d="M110 70 Q110 64 115 62 Q120 60 125 65 Q130 70 130 80" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+        <!-- Sparkles -->
+        <path d="M60 50 L62 54 L66 52 L64 56 L68 58 L64 60 L66 64 L62 62 L60 66 L58 62 L54 64 L56 60 L52 58 L56 56 L54 52 L58 54 Z" fill="currentColor" opacity="0.3"/>
+        <path d="M140 100 L142 104 L146 102 L144 106 L148 108 L144 110 L146 114 L142 112 L140 116 L138 112 L134 114 L136 110 L132 108 L136 106 L134 102 L138 104 Z" fill="currentColor" opacity="0.3"/>
+      </svg>
+      <h2>아직 코디 추천이 없습니다</h2>
+      <p>AI가 날씨에 맞는 완벽한 코디를 추천해드립니다!</p>
+      <%= link_to generate_outfit_suggestions_path, method: :post, class: "btn-primary-large" do %>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2 L12 6 M12 18 L12 22 M4.93 4.93 L7.76 7.76 M16.24 16.24 L19.07 19.07 M2 12 L6 12 M18 12 L22 12 M4.93 19.07 L7.76 16.24 M16.24 7.76 L19.07 4.93"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+        <span>첫 코디 추천 받기</span>
+      <% end %>
     </div>
   <% end %>
 </div>
+
+<style>
+.suggestions-page-modern {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title svg {
+  color: var(--color-lime);
+}
+
+.header-title h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin: 0.25rem 0 0 0;
+}
+
+.btn-generate {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-teal) 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.suggestions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.suggestion-card-modern {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.suggestion-card-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.suggestion-link-modern {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.suggestion-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--color-teal-light) 0%, var(--color-teal) 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.suggestion-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(10px);
+}
+
+.date-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.date-month {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.date-year {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.weather-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.weather-info svg {
+  flex-shrink: 0;
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.weather-details .temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.weather-details .desc {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.suggestion-content {
+  padding: 1.5rem;
+}
+
+.suggestion-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 1rem 0;
+}
+
+.items-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.items-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-bg-light);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.items-count svg {
+  color: var(--color-teal);
+}
+
+.no-items {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.suggestion-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.view-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-teal);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.suggestion-card-modern:hover .view-details {
+  gap: 0.75rem;
+}
+
+.empty-state-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  min-height: 500px;
+}
+
+.empty-state-large svg {
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.empty-state-large h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state-large p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 2rem 0;
+  max-width: 400px;
+}
+
+.btn-primary-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--color-lime) 0%, var(--color-teal) 100%);
+  color: var(--color-navy);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.btn-primary-large:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(93, 185, 174, 0.3);
+}
+
+@media (max-width: 768px) {
+  .suggestions-page-modern {
+    padding: 1rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.5rem;
+  }
+
+  .suggestions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

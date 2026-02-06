@@ -24,20 +24,27 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <nav class="navbar">
-        <div class="container">
-          <%= link_to "FitMe", dashboard_path, class: "logo" %>
-          <ul class="nav-links">
-            <li><%= link_to "대시보드", dashboard_path %></li>
-            <li><%= link_to "내 옷장", items_path %></li>
-            <li><%= link_to "코디 추천", outfit_suggestions_path %></li>
-            <li><%= link_to "프로필", profile_path %></li>
-            <li><%= button_to "로그아웃", destroy_user_session_path, method: :delete, class: "btn-logout" %></li>
-          </ul>
-        </div>
-      </nav>
+    <!-- Promotion Banner -->
+    <% unless user_signed_in? %>
+      <div class="promo-banner">
+        🎉 첫 가입 특별 혜택! 3D 아바타 생성 무료 + 코디 추천 1개월 무료
+        <%= link_to "자세히 보기", new_user_registration_path %>
+      </div>
     <% end %>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <%= link_to "FitMe", root_path, class: "logo" %>
+        <ul class="nav-links">
+          <li><%= link_to "홈", root_path %></li>
+          <li><%= link_to "대시보드", dashboard_path %></li>
+          <li><%= link_to "내 옷장", items_path %></li>
+          <li><%= link_to "코디 추천", outfit_suggestions_path %></li>
+          <li><%= link_to "프로필", profile_path %></li>
+        </ul>
+      </div>
+    </nav>
 
     <div class="container">
       <% if notice %>
